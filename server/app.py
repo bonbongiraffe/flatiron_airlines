@@ -87,6 +87,9 @@ def login():
 @app.route('/signup',methods=['POST'])
 def signup():
     data = request.get_json()
+    user = User.query.filter_by(email=data['email']).first()
+    if user:
+        return make_response({'error':'User with email exists already'},400)
     try:
         new_user = User(
             first_name = data['first_name'],
