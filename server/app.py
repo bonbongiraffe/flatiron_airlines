@@ -17,9 +17,10 @@ def id_query(class_name, id): # <-- queries db by id given class_name
         return make_response({'error':[v_error]})
 
 @app.route('/')
-def index:
+def index():
     return '<h1>Welcome to Unity Airlines!<h1>'
-       
+
+# restful routes
 class Reservation(Resource):
     def post(self):
         data = request.get_json()
@@ -33,7 +34,6 @@ class Reservation(Resource):
             )
             db.session.add(new_reservation)
             db.session.commit()
-            #session['reservation_id'] = new_reservation.id
             return make_response(new_reservation.to_dict(),201)
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
@@ -82,7 +82,7 @@ def login():
         return make_response(user.to_dict,200)
     return make_response({'error':'Incorrect email or password'},400)
 
-@app.route('signup',methods=['POST'])
+@app.route('/signup',methods=['POST'])
 def signup():
     data = request.get_json()
     try:
@@ -99,7 +99,7 @@ def signup():
     except ValueError as v_error:
         return make_response({'error':[v_error]},400)
 
-@app.route('authorized',methods=['GET'])
+@app.route('/authorized',methods=['GET'])
 def authorized():
     try:
         user = User.query.filter_by(id=session.get('user_id')).first()
@@ -107,7 +107,10 @@ def authorized():
     except:
         return make_response({'message':'Please login or signup'},404)
 
-@app.route('logout',methods=['DELETE'])
+@app.route('/logout',methods=['DELETE'])
 def logout():
     del session['user_id']
     return make_response({'message':'Logout successful'},204)
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
