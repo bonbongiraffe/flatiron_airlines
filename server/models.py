@@ -2,6 +2,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
+
 from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
@@ -19,6 +20,10 @@ class User(db.Model, SerializerMixin):
 
     # serialization
     serialize_rules = ('-reservations.user','-flights.user','-_password_hash',)
+
+    #repr
+    def __repr__(self):
+        return f'<id:{self.id}, first_name:{self.first_name}, last_name:{self.last_name}, email:{self.email}>'
 
    # validation
     @validates('email')
@@ -68,6 +73,10 @@ class Reservation(db.Model, SerializerMixin):
     # serialization
     serialize_rules = ('-user.reservations','-flight.reservations')
 
+    #repr
+    def __repr__(self):
+        return f'<id:{self.id}, user_id:{self.user_id}, filght_id:{self.flight_id}>'
+
 class Flight(db.Model, SerializerMixin):
     __tablename__ = "flights"
 
@@ -81,3 +90,7 @@ class Flight(db.Model, SerializerMixin):
 
     # serialization
     serialize_rules = ('-reservations.flight','-users.flights')
+
+    #repr
+    def __repr__(self):
+        return f'<id:{self.id}, origin:{self.origin}, destination:{self.destination}>'

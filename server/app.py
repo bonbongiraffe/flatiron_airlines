@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-from models import db, User, Reservation, Flight
+from models import User, Reservation, Flight
 from flask_restful import Api, Resource
 from flask import request, make_response, session, send_from_directory
 import os
+import ipdb
 
 from config import app, api, db
 
@@ -21,15 +22,16 @@ def index():
     return '<h1>Welcome to Unity Airlines!<h1>'
 
 # restful routes
-class Reservation(Resource):
+class Reservations(Resource):
     def post(self):
         data = request.get_json()
         flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
+        #ipdb.set_trace()
         if not flight:
             return make_response({'error':'Flight not found'},404)       
         try:
             new_reservation = Reservation(
-                user_id = data[user_id],
+                user_id = data["user_id"],
                 flight_id = flight.id
             )
             db.session.add(new_reservation)
@@ -38,16 +40,16 @@ class Reservation(Resource):
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
 
-class ReservationById(Resource):
+class ReservationsById(Resource):
     def get(self,id):
         reservation = id_query(Reservation,id)
-        if reservation.get('error'):
+        if hasattr(reservation,'error'):
             return reservation
         return make_response(reservation.to_dict(),200)
     
     def delete(self,id):
         reservation = id_query(Reservation,id)
-        if reservation.get('error'):
+        if hasattr(reservation,'error'):
             return reservation
         db.session.delete(reservation)
         db.session.commit()
@@ -55,7 +57,7 @@ class ReservationById(Resource):
     
     def patch(self,id):
         reservation = id_query(Reservation,id)
-        if reservation.get('error'):
+        if hasattr(reservation,'error'):
             return reservation
         try:
             data = request.get_json()
@@ -67,8 +69,8 @@ class ReservationById(Resource):
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
 
-api.add_resource(Reservation,'/reservation')
-api.add_resource(ReservationById,'/reservation/<int:id>')
+api.add_resource(Reservations,'/reservations')
+api.add_resource(ReservationsById,'/reservations/<int:id>')
 
 # auth routes
 @app.route('/login',methods=['POST'])
@@ -79,7 +81,7 @@ def login():
         return make_response({'error':'Incorrect email or password'},400)
     if user.authenticate(data['password']):
         session['user_id'] = user.id
-        return make_response(user.to_dict,200)
+        return make_response(user.to_dict(),200)
     return make_response({'error':'Incorrect email or password'},400)
 
 @app.route('/signup',methods=['POST'])
@@ -90,7 +92,7 @@ def signup():
             first_name = data['first_name'],
             last_name = data['last_name'],
             email = data['email'],
-            _password_hash = data['password']
+            password_hash = data['password']
         )
         db.session.add(new_user)
         db.session.commit()
