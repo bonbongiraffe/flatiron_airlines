@@ -92,8 +92,8 @@ def signup():
         return make_response({'error':'User with email exists already'},400)
     try:
         new_user = User(
-            first_name = data['first_name'],
-            last_name = data['last_name'],
+            first_name = data['firstName'],
+            last_name = data['lastName'],
             email = data['email'],
             password_hash = data['password']
         )

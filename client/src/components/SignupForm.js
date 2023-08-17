@@ -1,10 +1,7 @@
-import { useState } from "react"
 import { useFormik } from "formik"
 import * as yup from "yup"
 
 function SignupForm({ setUser, navigate }) {
-    //const [ formData, setFormData ] = useState({email:"",first_name:"",last_name:"",password:""})
-
     const handleSignup = (values) => {
         fetch('signup',{
             method: "POST",
@@ -14,7 +11,6 @@ function SignupForm({ setUser, navigate }) {
             .then( r => {
                 if ( r.ok ) {
                     r.json().then( newUser => setUser(newUser))
-                    setFormData({email:"",first_name:"",last_name:"",password:""})
                     navigate('/')
                 }
             })
@@ -22,16 +18,16 @@ function SignupForm({ setUser, navigate }) {
 
     const formSchema = yup.object().shape({
         email: yup.string().email("Invalid email").required("Must enter email"),
-        first_name: yup.string().min(1,'Name cannot be empty').max(15,'Name cannot exceed 15 characters').required("Must enter first name"),
-        last_name: yup.string().min(1,'Name cannot be empty').max(15,'Name cannot exceed 15 characters').required("Must enter last name"),
+        firstName: yup.string().min(1,'Name cannot be empty').max(15,'Name cannot exceed 15 characters').required("Must enter first name"),
+        lastName: yup.string().min(1,'Name cannot be empty').max(15,'Name cannot exceed 15 characters').required("Must enter last name"),
         password: yup.string().min(5,'Password must be at least 5 characters long').required('Must enter a password')
     })
 
     const formik = useFormik({
         initialValues:{
             email:"",
-            first_name:"",
-            last_name:"",
+            firstName:"",
+            lastName:"",
             password:""
         },
         validationSchema: formSchema,
@@ -49,25 +45,28 @@ function SignupForm({ setUser, navigate }) {
                         placeholder="email..."
                         className="input-text"
                         value={formik.values.email}
-                    ></input>
+                    />
+                    <p>{formik.errors.email}</p>
                 <label className="form-titles" htmlFor="first-name">First Name:</label>
                     <input 
                         onChange= {formik.handleChange}
                         type="text"
-                        name= "first name"
+                        name="firstName"
                         placeholder="first name..."
                         className="input-text"
-                        value={formik.values.first_name}
-                    ></input>
+                        value={formik.values.firstName}
+                    />
+                    <p>{formik.errors.firstName}</p>
                 <label className="form-titles" htmlFor="last-name">Last Name:</label>
                     <input 
                         onChange= {formik.handleChange}
                         type="text"
-                        name= "last name"
+                        name="lastName"
                         placeholder="last name..."
                         className="input-text"
-                        value={formik.values.last_name}
-                    ></input>
+                        value={formik.values.lastName}
+                    />
+                    <p>{formik.errors.lastName}</p>
                 <label className="form-titles" htmlFor="password">Password:</label>
                     <input 
                         onChange= {formik.handleChange}
@@ -76,7 +75,8 @@ function SignupForm({ setUser, navigate }) {
                         placeholder="password..."
                         className="input-password"
                         value={formik.values.password}
-                    ></input>
+                    />
+                    <p>{formik.errors.password}</p>
                 <button type='submit'>Signup</button>
             </form>
         </div>
