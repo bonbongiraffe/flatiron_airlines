@@ -9,7 +9,7 @@ function NavBar({ user, setUser, navigate }) {
           .then( r => {
             if (r.ok) {
               setUser(null)
-              //navigate('/')
+              navigate('/')
             }
           })
         }

@@ -1,7 +1,10 @@
 import { useState } from "react"
+import { useFormik } from "formik"
+import * as yup from "yup"
 
-function SignupForm({ setUser }) {
+function SignupForm({ setUser, navigate }) {
     const [ formData, setFormData ] = useState({email:"",password:""})
+    const [ error, setError ] = useState([])
 
     const handleSignup = (e) => {
         e.preventDefault()
@@ -10,8 +13,13 @@ function SignupForm({ setUser }) {
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(formData)
         })
-            .then( r => r.json())
-            .then( newUser => setUser(newUser))
+            .then( r => {
+                if ( r.ok ) {
+                    r.json().then( newUser => setUser(newUser))
+                    setFormData({email:"",password:""})
+                    navigate('/')
+                }
+            })
     }
 
     return(
@@ -35,7 +43,8 @@ function SignupForm({ setUser }) {
                         className="input-password"
                         value={formData.password}
                     ></input>
-                <button onClick={handleSignup}>Signup</button>
+                <button onClick={handleSignup}>Login</button>
+                { error ? <h1>{error}</h1> : null }
             </form>
         </div>
     )

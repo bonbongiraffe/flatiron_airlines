@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar"
 import SignupForm from "./SignupForm"
 import LoginForm from "./LoginForm"
+import ReservationForm from "./ReservationForm"
 
 function App() {
   const [ user, setUser ] = useState(null)
