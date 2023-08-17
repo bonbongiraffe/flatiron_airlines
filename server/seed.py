@@ -1,7 +1,7 @@
 from models import db, User, Reservation, Flight
 from app import app
 
-airports = ['EWR','LGA','DEN','HKG','MUC']
+airports = ['EWR','BOS','DEN','HKG','MUC']
 
 def clear_database():
     with app.app_context():

@@ -5,6 +5,7 @@ import NavBar from "./NavBar"
 import SignupForm from "./SignupForm"
 import LoginForm from "./LoginForm"
 import ReservationForm from "./ReservationForm"
+import Home from "./Home"
 
 function App() {
   const [ user, setUser ] = useState(null)
@@ -23,10 +24,13 @@ function App() {
     fetchUser()
   },[])
 
+  console.log("from App.js",user)
+
   return (
     <div className="App">
       <NavBar user={user} setUser={setUser} navigate={navigate}/>
       <Routes>
+        <Route path='home' element={<Home user={user}/>}></Route>
         <Route path='reservation' element={<ReservationForm user={user}/>}></Route>
         <Route path='signup' element={<SignupForm setUser={setUser} navigate={navigate}/>}></Route>
         <Route path='login' element={<LoginForm setUser={setUser} navigate={navigate}/>}></Route>
