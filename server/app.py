@@ -22,6 +22,13 @@ def index():
     return '<h1>Welcome to Unity Airlines!<h1>'
 
 # restful routes
+class FlightsById(Resource):
+    def get(self,id):
+        flight = id_query(Flight,id)
+        if hasattr(flight,'error'):
+            return flight
+        return make_response(flight.to_dict(),200)
+
 class Reservations(Resource):
     def post(self):
         data = request.get_json()
@@ -69,6 +76,7 @@ class ReservationsById(Resource):
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
 
+api.add_resource(FlightsById,'/flights/<int:id>')
 api.add_resource(Reservations,'/reservations')
 api.add_resource(ReservationsById,'/reservations/<int:id>')
 
@@ -92,8 +100,8 @@ def signup():
         return make_response({'error':'User with email exists already'},400)
     try:
         new_user = User(
-            first_name = data['first_name'],
-            last_name = data['last_name'],
+            first_name = data['firstName'],
+            last_name = data['lastName'],
             email = data['email'],
             password_hash = data['password']
         )

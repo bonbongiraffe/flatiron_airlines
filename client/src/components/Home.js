@@ -1,9 +1,32 @@
+import ReservationCard from "./ReservationCard"
+import { useEffect, useState, useContext } from "react"
+import { UserContext } from '../context/user'
 
+function Home({  }) {
+    const { user } = useContext(UserContext)
+    const [ reservations, setReservations ] = useState([])
+    console.log("from Home.js", user)
 
-function Home() {
+    useEffect(()=>{
+        setReservations(user.reservations)
+    },[])
+
+    const handleDelete = (deletedId) => {
+        setReservations(reservations.filter( reservation => reservation.id !== deletedId ))
+    }
+
+    const renderedReservations = reservations.map( reservation => 
+        <ReservationCard
+            key = {reservation.id}
+            reservationId = {reservation.id}
+            flightId = {reservation.flight_id}
+            handleDelete = {handleDelete}
+    />)
+
+    if (!user) return <h1>loading</h1>
     return(
         <div>
-
+            {renderedReservations}
         </div>
     )
 }

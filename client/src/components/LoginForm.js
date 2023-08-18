@@ -1,41 +1,63 @@
-import { useState } from "react"
+import { useFormik } from "formik"
+import { UserContext } from '../context/user'
+import { useContext } from "react"
+import * as yup from "yup"
 
-function SignupForm({ setUser }) {
-    const [ formData, setFormData ] = useState({email:"",password:""})
+function SignupForm({ navigate }) {
+    const { setUser } = useContext(UserContext)
 
-    const handleSignup = (e) => {
-        e.preventDefault()
+    const formSchema = yup.object().shape({
+        email: yup.string().email("Invalid email").required("Must enter email"),
+        password: yup.string().min(5,'Password must be at least 5 characters long').required('Must enter a password')
+    })
+
+    const handleLogin = (values) => {
         fetch('login',{
             method: "POST",
             headers: {"Content-Type":"application/json"},
-            body: JSON.stringify(formData)
+            body: JSON.stringify(values,null,2)
         })
-            .then( r => r.json())
-            .then( newUser => setUser(newUser))
+            .then( r => {
+                if ( r.ok ) {
+                    r.json().then( newUser => setUser(newUser))
+                    navigate('/')
+                }
+            })
     }
+
+    const formik = useFormik({
+        initialValues:{
+            email:"",
+            password:""
+        },
+        validationSchema: formSchema,
+        onSubmit: handleLogin
+    })
 
     return(
         <div className="auth-form">
-            <form>
+            <form onSubmit={formik.handleSubmit}>
                 <label className="form-titles" htmlFor="email">Email:</label>
                     <input 
-                        onChange= {(e)=>{setFormData({...formData, email: e.target.value})}}
+                        onChange= {formik.handleChange}
                         type="text"
                         name= "email"
                         placeholder="email..."
                         className="input-text"
-                        value={formData.email}
-                    ></input>
+                        value={formik.values.email}
+                    />
+                    <p>{formik.errors.email}</p>
                 <label className="form-titles" htmlFor="password">Password:</label>
                     <input 
-                        onChange= {(e)=>{setFormData({...formData, password: e.target.value})}}
+                        onChange= {formik.handleChange}
                         type="password"
                         name= "password"
                         placeholder="password..."
                         className="input-password"
-                        value={formData.password}
-                    ></input>
-                <button onClick={handleSignup}>Signup</button>
+                        value={formik.values.password}
+                    />
+                    <p>{formik.errors.password}</p>
+                <button type='submit'>Login</button>
             </form>
         </div>
     )
