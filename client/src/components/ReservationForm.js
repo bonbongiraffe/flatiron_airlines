@@ -28,24 +28,8 @@ const airportCities = [
 const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
 
 function ReservationForm({ isEdit=false, reservation={origin:"",destination:""} }) {
-    const [ formData, setFormData ] = useState(reservation)
+    console.log(reservation)
     const { user } = useContext(UserContext)
-    // const [ formValid, setFormValid ] = useState(false)
-
-    // console.log(Object.keys(airportDict))
-
-    // const validateForm = () => {
-    //     if (Object.keys(airportDict).includes(formData.origin) && Object.keys(airportDict).includes(formData.destination)){
-    //         if (formData.origin !== formData.destination){
-    //             setFormValid(true)
-    //         }
-    //     }
-    //     setFormValid(false)
-    // }
-
-    // useEffect(()=>{
-    //     validateForm()
-    // },[])
 
     const formSchema = yup.object().shape({
         origin: yup.string().required(),
@@ -65,10 +49,24 @@ function ReservationForm({ isEdit=false, reservation={origin:"",destination:""} 
             })
     }
 
+    const handleEdit = (values) => {
+        console.log(values)
+        fetch(`/reservations/${reservation.id}`,{
+            method: "PATCH",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({...values})
+        })
+            .then( r => {
+                if ( r.ok ){
+                    r.json().then(console.log())
+                }
+            })
+    }
+
     const formik = useFormik({
         initialValues: reservation,
         validationSchema: formSchema,
-        onSubmit: handleSubmit
+        onSubmit: isEdit ? handleEdit : handleSubmit 
     })
 
     // const cityOptions = Object.keys(airportDict).map( city => <option value={city}></option>)

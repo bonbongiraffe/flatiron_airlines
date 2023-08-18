@@ -33,7 +33,6 @@ class Reservations(Resource):
     def post(self):
         data = request.get_json()
         flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
-        #ipdb.set_trace()
         if not flight:
             return make_response({'error':'Flight not found'},404)       
         try:
@@ -68,8 +67,16 @@ class ReservationsById(Resource):
             return reservation
         try:
             data = request.get_json()
+            print(data)
             for attr in data:
-                setattr(reservation, attr, data[attr])
+                if attr not in ['origin','destination']:
+                    setattr(reservation, attr, data[attr])
+            if hasattr( data, 'origin' ):
+                flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
+                if not flight:
+                    return make_response({'error':'Flight not found'},404) 
+                reservation.flight_id = flight.id 
+            print(reservation) 
             db.session.add(reservation)
             db.session.commit()
             return make_response(reservation.to_dict(),200)

@@ -3,13 +3,21 @@ import { useEffect, useState, useContext } from "react"
 import { UserContext } from '../context/user'
 
 function Home({  }) {
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
     const [ reservations, setReservations ] = useState([])
-    console.log("from Home.js", user)
+    //console.log("from Home.js", user)
 
     useEffect(()=>{
-        setReservations(user.reservations)
-    },[])
+        if (!user){
+            fetch("/authorized")
+            .then( r => {
+            if (r.ok) {
+              r.json().then( user => {
+                setUser(user) 
+                setReservations(user.reservations)
+                }) } }) }
+        if (user) setReservations(user.reservations)
+    },[user])
 
     const handleDelete = (deletedId) => {
         setReservations(reservations.filter( reservation => reservation.id !== deletedId ))
