@@ -1,7 +1,10 @@
 import { useFormik } from "formik"
 import * as yup from "yup"
+import { UserContext } from '../context/user'
+import { useContext } from "react"
 
-function SignupForm({ setUser, navigate }) {
+function SignupForm({ navigate }) {
+    const { setUser } = useContext(UserContext)
     const handleSignup = (values) => {
         fetch('signup',{
             method: "POST",

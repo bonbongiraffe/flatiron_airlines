@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react"
-import Autosuggest from "react-autosuggest"
+import { useState, useContext } from "react"
+import { UserContext } from '../context/user'
+import { useFormik } from "formik"
+import * as yup from "yup"
+// import Autosuggest from "react-autosuggest"
 
 const airportCities = [
     {
@@ -24,8 +27,9 @@ const airportCities = [
 ]
 const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
 
-function ReservationForm({ user }) {
-    const [ formData, setFormData ] = useState({origin:"",destination:""})
+function ReservationForm({ isEdit=false, reservation={origin:"",destination:""} }) {
+    const [ formData, setFormData ] = useState(reservation)
+    const { user } = useContext(UserContext)
     // const [ formValid, setFormValid ] = useState(false)
 
     // console.log(Object.keys(airportDict))
@@ -43,18 +47,16 @@ function ReservationForm({ user }) {
     //     validateForm()
     // },[])
 
-    // const formSchema = yup.object().shape({
-    //     origin: yup.string().required(),
-    //     destination: yup.string().required()
-    // })
+    const formSchema = yup.object().shape({
+        origin: yup.string().required(),
+        destination: yup.string().required()
+    })
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log({...formData, user_id:user.id})
+    const handleSubmit = (values) => {
         fetch('/reservations',{
             method: "POST",
             headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({...formData, user_id:user.id})
+            body: JSON.stringify({...values, user_id:user.id})
         })
             .then( r => {
                 if ( r.ok ){
@@ -63,32 +65,39 @@ function ReservationForm({ user }) {
             })
     }
 
+    const formik = useFormik({
+        initialValues: reservation,
+        validationSchema: formSchema,
+        onSubmit: handleSubmit
+    })
+
     // const cityOptions = Object.keys(airportDict).map( city => <option value={city}></option>)
 
     return(
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
                 <label className="form-titles" htmlFor="origin">Origin:</label>
                     <input 
-                        onChange= {(e)=>{setFormData({...formData, origin: e.target.value})}}
+                        onChange= {formik.handleChange}
                         type="text"
                         name= "origin"
                         placeholder="origin..."
                         className="input-text"
-                        value={formData.origin}
+                        value={formik.values.origin}
                         list="cities"
-                    ></input>
+                    />
+                    <p>{formik.errors.origin}</p>
                 <label className="form-titles" htmlFor="destination">Destination:</label>
                     <input 
-                        onChange= {(e)=>{setFormData({...formData, destination: e.target.value})}}
+                        onChange= {formik.handleChange}
                         type="text"
                         name= "destination"
                         placeholder="destination..."
                         className="input-text"
-                        value={formData.destination}
+                        value={formik.values.destination}
                         list="cities"
-                    ></input>
-                {/* { formValid? <button onClick={handleSubmit}>Reserve</button> : <h1>Form Incomplete</h1> } */}
+                    />
+                    <p>{formik.errors.destination}</p>
                 <button type='submit'>Reserve</button>
             </form>
         </div>

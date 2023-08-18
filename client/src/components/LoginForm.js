@@ -1,7 +1,11 @@
 import { useFormik } from "formik"
+import { UserContext } from '../context/user'
+import { useContext } from "react"
 import * as yup from "yup"
 
-function SignupForm({ setUser, navigate }) {
+function SignupForm({ navigate }) {
+    const { setUser } = useContext(UserContext)
+
     const formSchema = yup.object().shape({
         email: yup.string().email("Invalid email").required("Must enter email"),
         password: yup.string().min(5,'Password must be at least 5 characters long').required('Must enter a password')

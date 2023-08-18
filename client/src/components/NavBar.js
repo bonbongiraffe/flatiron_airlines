@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from '../context/user'
 
-function NavBar({ user, setUser, navigate }) {
+function NavBar({ navigate }) {
+    const { user, setUser } = useContext(UserContext)
 
     const handleLogout = () => {
         fetch("logout",{
@@ -26,7 +29,8 @@ function NavBar({ user, setUser, navigate }) {
                 {user ? 
                 <> 
                     <li className="nav-bar-list"><NavLink className="nav-bar-link" to="home">Home</NavLink></li>
-                    <li className="nav-bar-list"><NavLink className="nav-bar-link" to="reservation">Reservation</NavLink></li>
+                    <li className="nav-bar-list"><NavLink className="nav-bar-link" to="new-reservation">New Reservation</NavLink></li>
+                    <li className="nav-bar-list"><NavLink className="nav-bar-link" to="manage-reservations">Manage Reservations</NavLink></li>
                     <li className="nav-bar-list"><button className="nav-bar-link" onClick={handleLogout}>Logout</button></li>
                 </>
                 :
