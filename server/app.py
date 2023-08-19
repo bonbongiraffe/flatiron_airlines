@@ -51,6 +51,7 @@ class ReservationsById(Resource):
         reservation = id_query(Reservation,id)
         if hasattr(reservation,'error'):
             return reservation
+        print(reservation)
         return make_response(reservation.to_dict(),200)
     
     def delete(self,id):
@@ -62,21 +63,25 @@ class ReservationsById(Resource):
         return make_response({'message':'Reservation deleted'},204)
     
     def patch(self,id):
+        # print(id)
         reservation = id_query(Reservation,id)
         if hasattr(reservation,'error'):
             return reservation
         try:
             data = request.get_json()
-            print(data)
+            # print(data,"from form")
             for attr in data:
-                if attr not in ['origin','destination']:
+                if attr not in ['origin','destination','id']:
+                    # print(attr)
                     setattr(reservation, attr, data[attr])
-            if hasattr( data, 'origin' ):
+            if 'origin' in data.keys():
+                # print("about to search for flights")
                 flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
                 if not flight:
                     return make_response({'error':'Flight not found'},404) 
+                # print(flight,"flight print")
                 reservation.flight_id = flight.id 
-            print(reservation) 
+            # print(reservation,"reservation print") 
             db.session.add(reservation)
             db.session.commit()
             return make_response(reservation.to_dict(),200)

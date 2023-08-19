@@ -8,16 +8,24 @@ function Home({  }) {
     //console.log("from Home.js", user)
 
     useEffect(()=>{
-        if (!user){
-            fetch("/authorized")
+        // if (!user){
+        //     fetch("/authorized")
+        //     .then( r => {
+        //     if (r.ok) {
+        //       r.json().then( user => {
+        //         setUser(user) 
+        //         setReservations(user.reservations)
+        //         }) } }) }
+        // if (user) setReservations(user.reservations)
+        fetch("/authorized")
             .then( r => {
             if (r.ok) {
               r.json().then( user => {
                 setUser(user) 
                 setReservations(user.reservations)
-                }) } }) }
-        if (user) setReservations(user.reservations)
-    },[user])
+                console.log(user.reservations)
+                }) } }) 
+    },[])
 
     const handleDelete = (deletedId) => {
         setReservations(reservations.filter( reservation => reservation.id !== deletedId ))

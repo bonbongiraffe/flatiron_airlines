@@ -27,7 +27,7 @@ const airportCities = [
 ]
 const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
 
-function ReservationForm({ isEdit=false, reservation={origin:"",destination:""} }) {
+function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",destination:""}} }) {
     console.log(reservation)
     const { user } = useContext(UserContext)
 
@@ -50,7 +50,7 @@ function ReservationForm({ isEdit=false, reservation={origin:"",destination:""} 
     }
 
     const handleEdit = (values) => {
-        console.log(values)
+        console.log(values,reservation.id)
         fetch(`/reservations/${reservation.id}`,{
             method: "PATCH",
             headers: {"Content-Type":"application/json"},
@@ -64,7 +64,7 @@ function ReservationForm({ isEdit=false, reservation={origin:"",destination:""} 
     }
 
     const formik = useFormik({
-        initialValues: reservation,
+        initialValues: reservation.flight,
         validationSchema: formSchema,
         onSubmit: isEdit ? handleEdit : handleSubmit 
     })

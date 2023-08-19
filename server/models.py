@@ -75,7 +75,7 @@ class Reservation(db.Model, SerializerMixin):
 
     #repr
     def __repr__(self):
-        return f'<id:{self.id}, user_id:{self.user_id}, filght_id:{self.flight_id}>'
+        return f'<id:{self.id}, user_id:{self.user_id}, flight_id:{self.flight_id}>'
 
 class Flight(db.Model, SerializerMixin):
     __tablename__ = "flights"
