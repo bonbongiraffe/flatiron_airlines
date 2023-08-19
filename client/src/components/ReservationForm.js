@@ -28,8 +28,9 @@ const airportCities = [
 const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
 
 function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",destination:""}} }) {
-    console.log(reservation)
+    // console.log(reservation)
     const { user } = useContext(UserContext)
+    const [ error, setError ] = useState(null)
 
     const formSchema = yup.object().shape({
         origin: yup.string().required(),
@@ -44,8 +45,10 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
         })
             .then( r => {
                 if ( r.ok ){
-                    r.json().then(console.log())
+                    // r.json().then(console.log())
+                    setError(null)
                 }
+                else setError("Invalid Reservation Form")
             })
     }
 
@@ -58,8 +61,10 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
         })
             .then( r => {
                 if ( r.ok ){
-                    r.json().then(console.log())
+                    // r.json().then(console.log())
+                    setError(null)
                 }
+                else setError("Invalid Reservation Form")
             })
     }
 
@@ -73,6 +78,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
 
     return(
         <div>
+            {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
             <form onSubmit={formik.handleSubmit}>
                 <label className="form-titles" htmlFor="origin">Origin:</label>
                     <input 
@@ -97,6 +103,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                     />
                     <p>{formik.errors.destination}</p>
                 <button type='submit'>Reserve</button>
+                { error ? <p>{error}</p> : null }
             </form>
         </div>
     )

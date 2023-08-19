@@ -23,7 +23,7 @@ function Home({  }) {
               r.json().then( user => {
                 setUser(user) 
                 setReservations(user.reservations)
-                console.log(user.reservations)
+                // console.log(user.reservations)
                 }) } }) 
     },[])
 

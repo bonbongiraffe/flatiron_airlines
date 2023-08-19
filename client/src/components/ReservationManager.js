@@ -28,7 +28,7 @@ function ReservationManager(){
 
     const formikSearch = useFormik({
         initialValues:{
-            reservationId: 0
+            reservationId: ""
         },
         validationSchema: formSchema,
         onSubmit: handleSearch
