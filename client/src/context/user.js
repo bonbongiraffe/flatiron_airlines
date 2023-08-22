@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
 
 const UserContext = React.createContext()
+const defaultUser = {reservations:[{id:0,flight_id:1}]}
 
 function UserProvider({ children }){
-    const [ user, setUser ] = useState({reservations:[{id:0,flight_id:1}]}) 
+    const [ user, setUser ] = useState(null) 
     const fetchUser = () => {
         fetch("/authorized")
           .then( r => {

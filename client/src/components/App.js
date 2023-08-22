@@ -7,6 +7,7 @@ import LoginForm from "./LoginForm"
 import ReservationForm from "./ReservationForm"
 import Home from "./Home"
 import { UserProvider  } from '../context/user';
+import ReservationManager from './ReservationManager';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path='home' element={<Home/>}></Route>
           <Route path='new-reservation' element={<ReservationForm/>}></Route>
+          <Route path='manage-reservations' element={<ReservationManager/>}></Route>
           <Route path='signup' element={<SignupForm navigate={navigate}/>}></Route>
           <Route path='login' element={<LoginForm navigate={navigate}/>}></Route>
         </Routes>

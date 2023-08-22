@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-function ReservationCard({ flightId, reservationId, handleDelete }) {
+function ReservationCard({ flightId, reservationId, seat }) {
     const [ flight, setFlight ] = useState({origin:"",destination:""})
 
     useEffect(()=>{
@@ -8,13 +8,6 @@ function ReservationCard({ flightId, reservationId, handleDelete }) {
             .then( r => r.json())
             .then( f => setFlight(f))
     },[])
-
-    const handleCancel = () => {
-        fetch(`reservations/${reservationId}`,{
-            method:"DELETE"
-        })
-        handleDelete(reservationId)
-    }
     
     return(
         <div className="reservation-card">
@@ -22,7 +15,7 @@ function ReservationCard({ flightId, reservationId, handleDelete }) {
             <h3>reservation #: {reservationId}</h3>
             <h3>origin: {flight.origin}</h3>
             <h3>destination: {flight.destination}</h3>
-            <button onClick={handleCancel}>Cancel</button>
+            <h3>seat: {seat}</h3>
         </div>
     )
 }
