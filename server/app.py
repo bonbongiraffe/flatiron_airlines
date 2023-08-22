@@ -22,23 +22,33 @@ def index():
     return '<h1>Welcome to Unity Airlines!<h1>'
 
 # restful routes
+class Flights(Resource):
+    def get(self):
+        flightDicts = []
+        for f in Flight.query.all():
+            flightDicts.append({**f.to_dict(),'open_seats':f.open_seats})
+        return make_response( flightDicts, 200)
+
 class FlightsById(Resource):
     def get(self,id):
         flight = id_query(Flight,id)
         if hasattr(flight,'error'):
             return flight
-        return make_response(flight.to_dict(),200)
+        return make_response({**flight.to_dict(),'open_seats':flight.open_seats},200)
 
 class Reservations(Resource):
     def post(self):
         data = request.get_json()
         flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
         if not flight:
-            return make_response({'error':'Flight not found'},404)       
+            return make_response({'error':'Flight not found'},404)  
+        if data["seat"] not in flight.open_seats:
+            return make_response({'error':'Seat is already taken'},400)     
         try:
             new_reservation = Reservation(
                 user_id = data["user_id"],
-                flight_id = flight.id
+                flight_id = flight.id,
+                seat = data["seat"]
             )
             db.session.add(new_reservation)
             db.session.commit()
@@ -88,6 +98,7 @@ class ReservationsById(Resource):
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
 
+api.add_resource(Flights,'/flights')
 api.add_resource(FlightsById,'/flights/<int:id>')
 api.add_resource(Reservations,'/reservations')
 api.add_resource(ReservationsById,'/reservations/<int:id>')

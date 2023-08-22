@@ -65,6 +65,7 @@ class Reservation(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     flight_id = db.Column(db.Integer, db.ForeignKey('flights.id'))
+    seat = db.Column(db.Integer)
 
     # relationship
     user = db.relationship('User', back_populates='reservations')
@@ -72,6 +73,13 @@ class Reservation(db.Model, SerializerMixin):
 
     # serialization
     serialize_rules = ('-user.reservations','-flight.reservations')
+
+    # validations
+    @validates('seat')
+    def validate_seat(self,id,new_seat):
+        if not 1 <= new_seat <= 20:
+            raise ValueError("Seat number must be between 1 and 20")
+        return new_seat
 
     #repr
     def __repr__(self):
@@ -90,6 +98,18 @@ class Flight(db.Model, SerializerMixin):
 
     # serialization
     serialize_rules = ('-reservations.flight','-users.flights')
+
+    # instance properties / methods
+    @property
+    def taken_seats(self):
+        seats_list = [r.seat for r in self.reservations]
+        return seats_list
+
+    @property
+    def open_seats(self):
+        empty_plane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        seats_list = [s for s in empty_plane if s not in self.taken_seats]
+        return seats_list
 
     #repr
     def __repr__(self):

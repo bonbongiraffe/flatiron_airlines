@@ -37,7 +37,7 @@ function ReservationManager(){
     return (
         <div className='reservation-manager'>
             { reservation ?
-            <ReservationForm isEdit={true} reservation={reservation}/>
+            <ReservationForm isEdit={true} reservation={reservation} setReservation={setReservation}/>
             :
             <form onSubmit={formikSearch.handleSubmit}>
                 { error ? <p>{error}</p> : null }

@@ -27,16 +27,16 @@ function Home({  }) {
                 }) } }) 
     },[])
 
-    const handleDelete = (deletedId) => {
-        setReservations(reservations.filter( reservation => reservation.id !== deletedId ))
-    }
+    // const handleDelete = (deletedId) => {
+    //     setReservations(reservations.filter( reservation => reservation.id !== deletedId ))
+    // }
 
     const renderedReservations = reservations.map( reservation => 
         <ReservationCard
             key = {reservation.id}
             reservationId = {reservation.id}
             flightId = {reservation.flight_id}
-            handleDelete = {handleDelete}
+            seat = {reservation.seat}
     />)
 
     if (!user) return <h1>loading</h1>
