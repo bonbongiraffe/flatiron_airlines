@@ -37,6 +37,7 @@ function Home({  }) {
             reservationId = {reservation.id}
             flightId = {reservation.flight_id}
             seat = {reservation.seat}
+            confNum = {reservation.conf_number}
     />)
 
     if (!user) return <h1>loading</h1>

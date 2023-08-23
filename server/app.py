@@ -53,7 +53,8 @@ class Reservations(Resource):
             new_reservation = Reservation(
                 user_id = data["user_id"],
                 flight_id = flight.id,
-                seat = data["seat"]
+                seat = data["seat"],
+                conf_number = conf_generator()
             )
             db.session.add(new_reservation)
             db.session.commit()
