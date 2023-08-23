@@ -38,48 +38,52 @@ function SignupForm({ navigate }) {
     })
 
     return(
-        <div className="auth-form">
+        <div className="form">
             <form onSubmit={formik.handleSubmit}>
-                <label className="form-titles" htmlFor="email">Email:</label>
-                    <input 
-                        onChange= {formik.handleChange}
-                        type="text"
-                        name= "email"
-                        placeholder="email..."
-                        className="input-text"
-                        value={formik.values.email}
-                    />
-                    <p>{formik.errors.email}</p>
-                <label className="form-titles" htmlFor="first-name">First Name:</label>
-                    <input 
-                        onChange= {formik.handleChange}
-                        type="text"
-                        name="firstName"
-                        placeholder="first name..."
-                        className="input-text"
-                        value={formik.values.firstName}
-                    />
-                    <p>{formik.errors.firstName}</p>
-                <label className="form-titles" htmlFor="last-name">Last Name:</label>
-                    <input 
-                        onChange= {formik.handleChange}
-                        type="text"
-                        name="lastName"
-                        placeholder="last name..."
-                        className="input-text"
-                        value={formik.values.lastName}
-                    />
-                    <p>{formik.errors.lastName}</p>
-                <label className="form-titles" htmlFor="password">Password:</label>
-                    <input 
-                        onChange= {formik.handleChange}
-                        type="password"
-                        name= "password"
-                        placeholder="password..."
-                        className="input-password"
-                        value={formik.values.password}
-                    />
-                    <p>{formik.errors.password}</p>
+                <div className="row">
+                    <div className="col">
+                        <input 
+                            onChange= {formik.handleChange}
+                            type="text"
+                            name="firstName"
+                            placeholder="first name..."
+                            className="form-control"
+                            value={formik.values.firstName}
+                        /><p>{formik.errors.firstName}</p>
+                    </div>
+                    <div className="col">
+                        <input 
+                            onChange= {formik.handleChange}
+                            type="text"
+                            name="lastName"
+                            placeholder="last name..."
+                            className="form-control"
+                            value={formik.values.lastName}
+                        /><p>{formik.errors.lastName}</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <input 
+                            onChange= {formik.handleChange}
+                            type="text"
+                            name= "email"
+                            placeholder="email..."
+                            className="form-control"
+                            value={formik.values.email}
+                        /><p>{formik.errors.email}</p>
+                    </div>
+                    <div className="col">
+                        <input 
+                            onChange= {formik.handleChange}
+                            type="password"
+                            name= "password"
+                            placeholder="password..."
+                            className="form-control"
+                            value={formik.values.password}
+                        /><p>{formik.errors.password}</p>
+                    </div>
+                </div>
                 <button type='submit'>Signup</button>
             </form>
         </div>

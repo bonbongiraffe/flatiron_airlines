@@ -4,6 +4,7 @@ from flask_restful import Api, Resource
 from flask import request, make_response, session, send_from_directory
 import os
 import ipdb
+import string, random
 
 from config import app, api, db
 
@@ -16,6 +17,19 @@ def id_query(class_name, id): # <-- queries db by id given class_name
         return result
     except ValueError as v_error:
         return make_response({'error':[v_error]})
+
+def conf_query(conf): # <-- queries reservations db by confirmation number 
+    try:
+        result = Reservation.query.filter_by(conf_number=conf).first()
+        if not result:
+            return make_response({'error':'Instance not found'},404)
+        return result
+    except ValueError as v_error:
+        return make_response({'error':[v_error]})
+
+def conf_generator(): # <-- generates random string of characters of length 5, among uppercase letters and digits
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(chars) for i in range(5))
 
 @app.route('/')
 def index():
@@ -48,7 +62,8 @@ class Reservations(Resource):
             new_reservation = Reservation(
                 user_id = data["user_id"],
                 flight_id = flight.id,
-                seat = data["seat"]
+                seat = data["seat"],
+                conf_number = conf_generator()
             )
             db.session.add(new_reservation)
             db.session.commit()
@@ -56,25 +71,25 @@ class Reservations(Resource):
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
 
-class ReservationsById(Resource):
-    def get(self,id):
-        reservation = id_query(Reservation,id)
+class ReservationsByConf(Resource):
+    def get(self,conf):
+        reservation = conf_query(conf)
         if hasattr(reservation,'error'):
             return reservation
         print(reservation)
         return make_response(reservation.to_dict(),200)
     
-    def delete(self,id):
-        reservation = id_query(Reservation,id)
+    def delete(self,conf):
+        reservation = conf_query(conf)
         if hasattr(reservation,'error'):
             return reservation
         db.session.delete(reservation)
         db.session.commit()
         return make_response({'message':'Reservation deleted'},204)
     
-    def patch(self,id):
-        # print(id)
-        reservation = id_query(Reservation,id)
+    def patch(self,conf):
+        # print(conf)
+        reservation = conf_query(conf)
         if hasattr(reservation,'error'):
             return reservation
         try:
@@ -101,7 +116,7 @@ class ReservationsById(Resource):
 api.add_resource(Flights,'/flights')
 api.add_resource(FlightsById,'/flights/<int:id>')
 api.add_resource(Reservations,'/reservations')
-api.add_resource(ReservationsById,'/reservations/<int:id>')
+api.add_resource(ReservationsByConf,'/reservations/<string:conf>')
 
 # auth routes
 @app.route('/login',methods=['POST'])
@@ -150,3 +165,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+    
