@@ -147,12 +147,12 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                 setError("Flight not found")
             }
         }
-    },[formik.values, formik.isSubmitting])
+    },[formik.values, error])
 
     return(
         <div className="d-flex justify-content-center align-items-center vh-100">
-            {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
             <form className="" style={{width:'30rem'}}onSubmit={formik.handleSubmit}>
+                {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
                 <div className="row">
                     <div className="col">
                         <label className="form-titles" htmlFor="origin">Origin:</label>
