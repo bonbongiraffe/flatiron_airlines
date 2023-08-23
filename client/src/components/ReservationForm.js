@@ -42,19 +42,24 @@ const seatingChart = (openSeatslist=[]) => {
             else row.push('xx')
         }
         // console.log(row)
-        chart.push(<li>{`W | ${row[0].toString().padStart(2,'0')} ${row[1].toString().padStart(2,'0')} | A | ${row[2].toString().padStart(2,'0')} ${row[3].toString().padStart(2,'0')} | W`}</li>)
+        chart.push(<li className="list-item">{`W | ${row[0].toString().padStart(2,'0')} ${row[1].toString().padStart(2,'0')} | A | ${row[2].toString().padStart(2,'0')} ${row[3].toString().padStart(2,'0')} | W`}</li>)
     }
     // console.log(chart)
     return chart
 }
 
 const openSeatingChart = <>
-    <li>W | 01 02 | A | 03 04 | W</li> 
-    <li>W | 05 06 | A | 07 08 | W</li> 
-    <li>W | 09 10 | A | 11 12 | W</li> 
-    <li>W | 13 14 | A | 15 16 | W</li> 
-    <li>W | 17 18 | A | 19 20 | W</li>
+    <li className="list-item">W | 01 02 | A | 03 04 | W</li> 
+    <li className="list-item">W | 05 06 | A | 07 08 | W</li> 
+    <li className="list-item">W | 09 10 | A | 11 12 | W</li> 
+    <li className="list-item">W | 13 14 | A | 15 16 | W</li> 
+    <li className="list-item">W | 17 18 | A | 19 20 | W</li>
     </>
+
+const seatingChartLegend = <ul className="list-unstyled">
+    <li className="list-item">W = window</li>
+    <li className="list-item">A = aisle</li>
+</ul>
 
 function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",destination:""}, seat:0}, setReservation=null }) {
     // console.log(reservation)
@@ -142,45 +147,53 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
 
     return(
         <div>
-            { searchFlight ? seatingChart(searchFlight.open_seats) : openSeatingChart }
             {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
-            <form onSubmit={formik.handleSubmit}>
-                <label className="form-titles" htmlFor="origin">Origin:</label>
-                    <input 
-                        onChange= {formik.handleChange}
-                        type="text"
-                        name= "origin"
-                        placeholder="origin..."
-                        className="input-text"
-                        value={formik.values.origin}
-                        list="cities"
-                    />
-                    <p>{formik.errors.origin}</p>
-                <label className="form-titles" htmlFor="destination">Destination:</label>
-                    <input 
-                        onChange= {formik.handleChange}
-                        type="text"
-                        name= "destination"
-                        placeholder="destination..."
-                        className="input-text"
-                        value={formik.values.destination}
-                        list="cities"
-                    />
-                    <p>{formik.errors.destination}</p>
+            <form className="form" onSubmit={formik.handleSubmit}>
+                <div className="row">
+                    <div className="col">
+                        <label className="form-titles" htmlFor="origin">Origin:</label>
+                            <input 
+                                onChange= {formik.handleChange}
+                                type="text"
+                                name= "origin"
+                                placeholder="origin..."
+                                className="form-control"
+                                value={formik.values.origin}
+                                list="cities"
+                            /><p>{formik.errors.origin}</p>
+                    </div>
+                    <div className="col">
+                        <label className="form-titles" htmlFor="destination">Destination:</label>
+                            <input 
+                                onChange= {formik.handleChange}
+                                type="text"
+                                name= "destination"
+                                placeholder="destination..."
+                                className="form-control"
+                                value={formik.values.destination}
+                                list="cities"
+                            /><p>{formik.errors.destination}</p>
+                    </div>
+                </div>
                 <label className="form-titles" htmlFor="seat">Seat:</label>
                     <input 
                         onChange= {formik.handleChange}
                         type="number"
                         name= "seat"
                         placeholder="seat..."
-                        className="input-number"
+                        className="form-control"
                         value={formik.values.seat}
                         list="cities"
                     />
                     <p>{formik.errors.seat}</p>
                 <button type='submit'>Reserve</button>
                 { error ? <p>{error}</p> : null }
-                { isEdit ? <button onClick={e => handleCancel(reservation.id)}>Cancel</button> : null }
+                { isEdit ? <button className="btn" onClick={e => handleCancel(reservation.id)}>Cancel</button> : null }
+                <h3>Seating Chart</h3>
+                <ul className="list-unstyled">
+                    { searchFlight ? seatingChart(searchFlight.open_seats) : openSeatingChart }
+                </ul>
+                {seatingChartLegend}
             </form>
         </div>
     )

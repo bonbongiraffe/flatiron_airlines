@@ -4,6 +4,7 @@ from flask_restful import Api, Resource
 from flask import request, make_response, session, send_from_directory
 import os
 import ipdb
+import string, random
 
 from config import app, api, db
 
@@ -16,6 +17,10 @@ def id_query(class_name, id): # <-- queries db by id given class_name
         return result
     except ValueError as v_error:
         return make_response({'error':[v_error]})
+
+def conf_generator(): # <-- generates random string of characters of length 5, among uppercase letters and digits
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(chars) for i in range(5))
 
 @app.route('/')
 def index():
@@ -150,3 +155,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+    

@@ -10,11 +10,9 @@ function ReservationCard({ flightId, reservationId, seat }) {
     },[])
     
     return(
-        <div className="reservation-card">
-            {/* <p>placeholder</p> */}
-            <h3>reservation #: {reservationId}</h3>
-            <h3>origin: {flight.origin}</h3>
-            <h3>destination: {flight.destination}</h3>
+        <div className="card" style={{width: '20rem'}}>
+            <h3 className="card-title">reservation: {reservationId}</h3>
+            <h3>{flight.origin} {'—>'} {flight.destination}</h3>
             <h3>seat: {seat}</h3>
         </div>
     )

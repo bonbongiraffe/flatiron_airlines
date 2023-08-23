@@ -35,7 +35,7 @@ function ReservationManager(){
     })
     
     return (
-        <div className='reservation-manager'>
+        <div className='form'>
             { reservation ?
             <ReservationForm isEdit={true} reservation={reservation} setReservation={setReservation}/>
             :
@@ -47,7 +47,7 @@ function ReservationManager(){
                         type="text"
                         name= "reservationId"
                         placeholder="reservationId..."
-                        className="input-text"
+                        className="form-control"
                         value={formikSearch.values.reservationId}
                     />
                     <p>{formikSearch.errors.reservationId}</p>
