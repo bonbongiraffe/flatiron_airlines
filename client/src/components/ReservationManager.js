@@ -10,11 +10,11 @@ function ReservationManager(){
     const [ error, setError ] = useState(null)
 
     const formSchema = yup.object().shape({
-        reservationId: yup.number().required()
+        confNum: yup.string().required()
     })
 
     const handleSearch = (values) => {
-        fetch(`/reservations/${values.reservationId}`)
+        fetch(`/reservations/${values.confNum}`)
             .then( r => {
                 if ( r.ok ){
                     r.json().then( r => {
@@ -28,7 +28,7 @@ function ReservationManager(){
 
     const formikSearch = useFormik({
         initialValues:{
-            reservationId: ""
+            confNum: ""
         },
         validationSchema: formSchema,
         onSubmit: handleSearch
@@ -41,16 +41,16 @@ function ReservationManager(){
             :
             <form onSubmit={formikSearch.handleSubmit}>
                 { error ? <p>{error}</p> : null }
-                <label className="form-titles" htmlFor="reservation-id">Reservation #:</label>
+                <label className="form-titles" htmlFor="confirmation-number">Confirmation #:</label>
                     <input 
                         onChange= {formikSearch.handleChange}
                         type="text"
-                        name= "reservationId"
-                        placeholder="reservationId..."
+                        name= "confNum"
+                        placeholder="confirmation number..."
                         className="form-control"
-                        value={formikSearch.values.reservationId}
+                        value={formikSearch.values.confNum}
                     />
-                    <p>{formikSearch.errors.reservationId}</p>
+                    <p>{formikSearch.errors.confNum}</p>
                     <button type='submit'>Edit</button>
             </form>
             }

@@ -93,7 +93,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
 
     const handleEdit = (values) => {
         // console.log(values,reservation.id)
-        fetch(`/reservations/${reservation.id}`,{
+        fetch(`/reservations/${reservation.conf_number}`,{
             method: "PATCH",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify({...values})
@@ -114,8 +114,8 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
         onSubmit: isEdit ? handleEdit : handleSubmit 
     })
     
-    const handleCancel = (reservationId) => {
-        fetch(`reservations/${reservationId}`,{
+    const handleCancel = (confNum) => {
+        fetch(`reservations/${confNum}`,{
             method:"DELETE"
         })
         setReservation(null)
@@ -188,7 +188,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                     <p>{formik.errors.seat}</p>
                 <button type='submit'>Reserve</button>
                 { error ? <p>{error}</p> : null }
-                { isEdit ? <button className="btn" onClick={e => handleCancel(reservation.id)}>Cancel</button> : null }
+                { isEdit ? <button className="btn" onClick={e => handleCancel(reservation.conf_number)}>Cancel</button> : null }
                 <h3>Seating Chart</h3>
                 <ul className="list-unstyled">
                     { searchFlight ? seatingChart(searchFlight.open_seats) : openSeatingChart }
