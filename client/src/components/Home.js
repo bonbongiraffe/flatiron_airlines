@@ -5,31 +5,17 @@ import { UserContext } from '../context/user'
 function Home({  }) {
     const { user, setUser } = useContext(UserContext)
     const [ reservations, setReservations ] = useState([])
-    //console.log("from Home.js", user)
 
     useEffect(()=>{
-        // if (!user){
-        //     fetch("/authorized")
-        //     .then( r => {
-        //     if (r.ok) {
-        //       r.json().then( user => {
-        //         setUser(user) 
-        //         setReservations(user.reservations)
-        //         }) } }) }
-        // if (user) setReservations(user.reservations)
+        document.title = 'Flatlines | Home'
         fetch("/authorized")
             .then( r => {
             if (r.ok) {
               r.json().then( user => {
                 setUser(user) 
                 setReservations(user.reservations)
-                // console.log(user.reservations)
                 }) } }) 
     },[])
-
-    // const handleDelete = (deletedId) => {
-    //     setReservations(reservations.filter( reservation => reservation.id !== deletedId ))
-    // }
 
     const renderedReservations = reservations.map( reservation => 
         <ReservationCard

@@ -68,6 +68,8 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
     const [ error, setError ] = useState(null)
     const [ searchFlight, setSearchFlight ] = useState(null)
 
+    useEffect(()=>{if (!isEdit) document.title='Flatlines | Create Reservation'},[])
+
     const formSchema = yup.object().shape({
         origin: yup.string().required(),
         destination: yup.string().required(),
