@@ -85,6 +85,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                 if ( r.ok ){
                     // setSearchFlight({...searchFlight,open_seats: searchFlight.open_seats.})
                     setError(null)
+                    // formik.resetForm()
                     // setSearchFlight(r.json())
                 }
                 else setError("Invalid Reservation Form")
@@ -102,6 +103,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                 if ( r.ok ){
                     // setSearchFlight({...searchFlight,open_seats: searchFlight.open_seats.})
                     setError(null)
+                    // formik.resetForm()
                     // setSearchFlight(r.json())
                 }
                 else setError("Invalid Reservation Form")
@@ -126,29 +128,31 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
     // console.log(Object.values(airportDict))
     useEffect(()=>{
         // console.log(formik.values)
-        if (Object.values(airportDict).includes(formik.values.origin) && Object.values(airportDict).includes(formik.values.destination)){
-            if (formik.values.origin === formik.values.destination){
-                setError("Origin and Destination cannot match")
-            } else {
-                setError("")
-                fetch(`flights`)
-                    .then( r => r.json())
-                    .then( flights => {
-                        flights.map( flight => {
-                            if (flight.origin === formik.values.origin && flight.destination === formik.values.destination)
-                                setSearchFlight(flight)
+        if (!!formik.values.origin && !!formik.values.destination){
+            if (Object.values(airportDict).includes(formik.values.origin) && Object.values(airportDict).includes(formik.values.destination)){
+                if (formik.values.origin === formik.values.destination){
+                    setError("Origin and Destination cannot match")
+                } else {
+                    setError("")
+                    fetch(`flights`)
+                        .then( r => r.json())
+                        .then( flights => {
+                            flights.map( flight => {
+                                if (flight.origin === formik.values.origin && flight.destination === formik.values.destination)
+                                    setSearchFlight(flight)
+                            })
                         })
-                    })
+                }
+            } else {
+                setError("Flight not found")
             }
-        } else {
-            setError("Flight not found")
         }
     },[formik.values, formik.isSubmitting])
 
     return(
-        <div>
+        <div className="d-flex justify-content-center align-items-center vh-100">
             {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
-            <form className="form" onSubmit={formik.handleSubmit}>
+            <form className="" style={{width:'30rem'}}onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col">
                         <label className="form-titles" htmlFor="origin">Origin:</label>
@@ -186,9 +190,9 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                         list="cities"
                     />
                     <p>{formik.errors.seat}</p>
-                <button type='submit'>Reserve</button>
+                <button className="btn btn-primary" type='submit'>Reserve</button>
                 { error ? <p>{error}</p> : null }
-                { isEdit ? <button className="btn" onClick={e => handleCancel(reservation.conf_number)}>Cancel</button> : null }
+                { isEdit ? <button className="btn btn-danger" onClick={e => handleCancel(reservation.conf_number)}>Cancel</button> : null }
                 <h3>Seating Chart</h3>
                 <ul className="list-unstyled">
                     { searchFlight ? seatingChart(searchFlight.open_seats) : openSeatingChart }

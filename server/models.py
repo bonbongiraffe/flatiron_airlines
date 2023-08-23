@@ -66,7 +66,7 @@ class Reservation(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     flight_id = db.Column(db.Integer, db.ForeignKey('flights.id'))
     seat = db.Column(db.Integer) # STRETCH-1
-    conf_number = db.Column(db.String) # STRETCH-2
+    conf_number = db.Column(db.String, unique=True) # STRETCH-2
 
     # relationship
     user = db.relationship('User', back_populates='reservations')

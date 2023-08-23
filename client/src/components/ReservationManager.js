@@ -35,11 +35,11 @@ function ReservationManager(){
     })
     
     return (
-        <div className='form'>
+        <div className='d-flex justify-content-center align-items-center vh-100'>
             { reservation ?
             <ReservationForm isEdit={true} reservation={reservation} setReservation={setReservation}/>
             :
-            <form onSubmit={formikSearch.handleSubmit}>
+            <form className='form' style={{width:'30rem'}} onSubmit={formikSearch.handleSubmit}>
                 { error ? <p>{error}</p> : null }
                 <label className="form-titles" htmlFor="confirmation-number">Confirmation #:</label>
                     <input 
