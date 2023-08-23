@@ -1,10 +1,12 @@
 import { useFormik } from "formik"
 import { UserContext } from '../context/user'
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import * as yup from "yup"
 
-function SignupForm({ navigate }) {
+function LoginForm({ navigate }) {
     const { setUser } = useContext(UserContext)
+
+    useEffect(()=>{document.title='Flatlines | Login'},[])
 
     const formSchema = yup.object().shape({
         email: yup.string().email("Invalid email").required("Must enter email"),
@@ -65,4 +67,4 @@ function SignupForm({ navigate }) {
     )
 }
 
-export default SignupForm
+export default LoginForm

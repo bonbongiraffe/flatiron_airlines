@@ -3,10 +3,16 @@ from app import app
 
 airports = ['EWR','BOS','DEN','HKG','MUC']
 
-def clear_database():
+def clear_flights():
     with app.app_context():
         print('Deleting flights...')
         Flight.query.delete()
+        db.session.commit()
+
+def clear_reservations():
+    with app.app_context():
+        print('Deleting reservations...')
+        Reservation.query.delete()
         db.session.commit()
 
 def create_flights():
@@ -23,6 +29,7 @@ def create_flights():
                     db.session.commit()
 
 if __name__ == '__main__':
-    clear_database()
-    create_flights()
+    # clear_flights()
+    # create_flights()
+    clear_reservations()
     print('Bon voyage!')

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { UserContext } from '../context/user'
 import { useFormik } from "formik"
 import * as yup from "yup"
@@ -8,6 +8,8 @@ function ReservationManager(){
     const { user } = useContext(UserContext)
     const [ reservation, setReservation ] = useState(null)
     const [ error, setError ] = useState(null)
+
+    useEffect(()=>{document.title='Flatlines | Edit Reservation'},[])
 
     const formSchema = yup.object().shape({
         confNum: yup.string().required()

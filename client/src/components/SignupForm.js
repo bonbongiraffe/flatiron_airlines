@@ -1,10 +1,13 @@
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { UserContext } from '../context/user'
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 function SignupForm({ navigate }) {
     const { setUser } = useContext(UserContext)
+
+    useEffect(()=>{document.title='Flatlines | Signup'},[])
+
     const handleSignup = (values) => {
         fetch('signup',{
             method: "POST",
