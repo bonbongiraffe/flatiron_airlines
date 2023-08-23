@@ -28,7 +28,7 @@ db.init_app( app )
 api = Api( app )
 bcrypt = Bcrypt( app )
 
-UPLOAD_FOLDER = 'static/user_images'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+# UPLOAD_FOLDER = 'static/user_images'
+# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app.secret_key = b'81\x9b\xe6\xb8\x11\xf8\x81\x91\xcf)\xefb-\xda\x18'
