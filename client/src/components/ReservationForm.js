@@ -1,8 +1,9 @@
 import { useState, useContext, useEffect } from "react"
 import { UserContext } from '../context/user'
 import { useFormik } from "formik"
-import * as yup from "yup"
 import AirportAutosuggest from "./AiportAutosuggest"
+import * as yup from "yup"
+import * as assets from "../assets"
 
 const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG","New York City":"JFK"}
 
@@ -137,24 +138,20 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                     <div className="col">
                         <label className="form-titles" htmlFor="origin">Origin:</label>
                             <AirportAutosuggest
-                                inputProps={{
-                                    name: 'origin',
-                                    placeholder: 'City or Airport name...',
-                                    onChange: formik.handleChange,
-                                    value: formik.values.origin
-                                }}                        
+                                name='origin'
+                                placeholder='City or Airport name...'
+                                onChange={formik.handleChange}
+                                value={formik.values.origin}                 
                             />                     
                             <p>{formik.errors.origin}</p>                           
                     </div>
                     <div className="col">
                         <label className="form-titles" htmlFor="destination">Destination:</label>
                             <AirportAutosuggest
-                                inputProps={{
-                                    name: 'destination',
-                                    placeholder: 'City or Airport name...',
-                                    onChange: formik.handleChange,
-                                    value: formik.values.destination
-                                }}                        
+                                name='destination'
+                                placeholder='City or Airport name...'
+                                onChange={formik.handleChange}
+                                value={formik.values.destination}                        
                             />                     
                             <p>{formik.errors.destination}</p>   
                     </div>
