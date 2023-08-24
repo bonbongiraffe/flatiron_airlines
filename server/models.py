@@ -73,7 +73,7 @@ class Reservation(db.Model, SerializerMixin):
     flight = db.relationship('Flight', back_populates='reservations')
 
     # serialization
-    serialize_rules = ('-user.reservations','-flight.reservations')
+    serialize_rules = ('-user.reservations','-flight.reservations',)
 
     # validations
     @validates('seat')
@@ -98,7 +98,7 @@ class Flight(db.Model, SerializerMixin):
     users = association_proxy('reservations','user')
 
     # serialization
-    serialize_rules = ('-reservations.flight','-users.flights')
+    serialize_rules = ('-reservations.flight','-users.flights',)
 
     # instance properties / methods
     @property
@@ -122,6 +122,9 @@ class Airport(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String)
     id_code = db.Column(db.String)
+
+    #serialization
+    # serialize_rules = ('-id',)
 
     #repr
     def __repr__(self):

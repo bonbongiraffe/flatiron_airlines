@@ -27,7 +27,7 @@ function AirportAutosuggest({ onChange, name, value, placeholder }){
 
     // DO NOT remove 'event' in this line below
     const onSuggestionSelected = (event, { suggestion }) => {
-                onChange({ target: { name: name, value: suggestion.airport}})
+                onChange({ target: { name: name, value: suggestion.id_code}})
             }
 
     const onKeyDown = (event) => {
@@ -51,20 +51,20 @@ function AirportAutosuggest({ onChange, name, value, placeholder }){
         }
     }
 
-    const getSuggestionValue = suggestion => suggestion.airport
+    const getSuggestionValue = suggestion => suggestion.id_code
 
     const getSuggestions = value => {
         const inputValue = value.trim().toLowerCase()
         const inputLength = inputValue.length
     
         return inputLength === 0 ? [] : locations.filter(l => 
-            (l.airport.toLowerCase().slice(0, inputLength) === inputValue || l.city.toLowerCase().slice(0, inputLength) === inputValue  ) 
+            (l.id_code.toLowerCase().slice(0, inputLength) === inputValue || l.city.toLowerCase().slice(0, inputLength) === inputValue  ) 
         )
     }
 
     const renderSuggestion = suggestion => (
         <div className='dropdown-item'>
-            {suggestion.city} / {suggestion.airport}
+            {suggestion.city} / {suggestion.id_code}
         </div>
     )
 

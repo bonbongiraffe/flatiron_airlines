@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from models import User, Reservation, Flight
+from models import User, Reservation, Flight, Airport
 from flask_restful import Api, Resource
 from flask import request, make_response, session, send_from_directory
 import os
@@ -36,6 +36,10 @@ def index():
     return '<h1>Welcome to Unity Airlines!<h1>'
 
 # restful routes
+class Airports(Resource):
+    def get(self):
+        return make_response([a.to_dict() for a in Airport.query.all()],200)
+
 class Flights(Resource):
     def get(self):
         flightDicts = []
@@ -113,6 +117,7 @@ class ReservationsByConf(Resource):
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
 
+api.add_resource(Airports,'/airports')
 api.add_resource(Flights,'/flights')
 api.add_resource(FlightsById,'/flights/<int:id>')
 api.add_resource(Reservations,'/reservations')
