@@ -1,47 +1,14 @@
 import { useState, useContext, useEffect } from "react"
 import { UserContext } from '../context/user'
-import { useFormik, Field } from "formik"
-import * as yup from "yup"
+import { LocationsContext } from "../context/locations"
+import { useFormik } from "formik"
 import AirportAutosuggest from "./AiportAutosuggest"
-
-const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
-
-const seatingChart = (openSeatslist=[]) => {
-    const emptyPlane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-    let chart = []
-    for (let i = 0 ; i < 5 ; i++){ // <-- once for each row
-        let row = []
-        for (let j = i*4 ; j < (i*4)+4 ; j++){ // <-- once for each seat
-            // console.log(j)
-            if ( openSeatslist.includes(j+1) ){
-                row.push(j+1)
-            }
-            else row.push('xx')
-        }
-        // console.log(row)
-        chart.push(<li className="list-item">{`W | ${row[0].toString().padStart(2,'0')} ${row[1].toString().padStart(2,'0')} | A | ${row[2].toString().padStart(2,'0')} ${row[3].toString().padStart(2,'0')} | W`}</li>)
-    }
-    // console.log(chart)
-    return chart
-}
-
-const openSeatingChart = <>
-    <li className="list-item">W | 01 02 | A | 03 04 | W</li> 
-    <li className="list-item">W | 05 06 | A | 07 08 | W</li> 
-    <li className="list-item">W | 09 10 | A | 11 12 | W</li> 
-    <li className="list-item">W | 13 14 | A | 15 16 | W</li> 
-    <li className="list-item">W | 17 18 | A | 19 20 | W</li>
-    </>
-
-const seatingChartLegend = <ul className="list-unstyled">
-    <li className="list-item">W = window</li>
-    <li className="list-item">A = aisle</li>
-</ul>
+import * as yup from "yup"
+import * as assets from "../assets"
 
 function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",destination:""}, seat:0}, setReservation=null }) {
-    // console.log(reservation)
-    seatingChart()
     const { user } = useContext(UserContext)
+    const { airports } = useContext(LocationsContext)
     const [ error, setError ] = useState(null)
     const [ searchFlight, setSearchFlight ] = useState(null)
 
@@ -103,12 +70,10 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
         // handleDelete(reservationId)
     }
 
-    // const cityOptions = Object.keys(airportDict).map( city => <option value={city}></option>)
-    // console.log(Object.values(airportDict))
     useEffect(()=>{
-        // console.log(formik.values)
+        console.log(airports)
         if (!!formik.values.origin && !!formik.values.destination){
-            if (Object.values(airportDict).includes(formik.values.origin) && Object.values(airportDict).includes(formik.values.destination)){
+            if (airports.includes(formik.values.origin) && airports.includes(formik.values.destination)){
                 if (formik.values.origin === formik.values.destination){
                     setError("Origin and Destination cannot match")
                 } else {
@@ -128,33 +93,31 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
         }
     },[formik.values, error])
 
+    if (!airports) return <div>Loading...</div>
+
     return(
         <div className="d-flex justify-content-center align-items-center vh-100">
-            <form className="" style={{}}onSubmit={formik.handleSubmit}>
+            <form className="" style={{}} onSubmit={formik.handleSubmit}>
                 {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
                 {/*IF form container has width attribute --> for below row div style={{'--bs-gutter-x': 'unset', 'padding-right': 'rem'}} */}
                 <div className="row" >
                     <div className="col">
                         <label className="form-titles" htmlFor="origin">Origin:</label>
                             <AirportAutosuggest
-                                inputProps={{
-                                    name: 'origin',
-                                    placeholder: 'City or Airport name...',
-                                    onChange: formik.handleChange,
-                                    value: formik.values.origin
-                                }}                        
+                                name='origin'
+                                placeholder='City or Airport name...'
+                                onChange={formik.handleChange}
+                                value={formik.values.origin}                 
                             />                     
                             <p>{formik.errors.origin}</p>                           
                     </div>
                     <div className="col">
                         <label className="form-titles" htmlFor="destination">Destination:</label>
                             <AirportAutosuggest
-                                inputProps={{
-                                    name: 'destination',
-                                    placeholder: 'City or Airport name...',
-                                    onChange: formik.handleChange,
-                                    value: formik.values.destination
-                                }}                        
+                                name='destination'
+                                placeholder='City or Airport name...'
+                                onChange={formik.handleChange}
+                                value={formik.values.destination}                        
                             />                     
                             <p>{formik.errors.destination}</p>   
                     </div>
@@ -175,9 +138,9 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                 { isEdit ? <button className="btn btn-danger" onClick={e => handleCancel(reservation.conf_number)}>Cancel</button> : null }
                 <h3>Seating Chart</h3>
                 <ul className="list-unstyled">
-                    { searchFlight ? seatingChart(searchFlight.open_seats) : openSeatingChart }
+                    { searchFlight ? assets.renderSeatingChart(searchFlight.open_seats) : assets.openSeatingChart }
                 </ul>
-                {seatingChartLegend}
+                {assets.seatingChartLegend}
             </form>
         </div>
     )

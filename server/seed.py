@@ -1,7 +1,8 @@
 from models import db, User, Reservation, Flight
 from app import app
+from data_utils import get_airport_list
 
-airports = ['EWR','BOS','DEN','HKG','MUC']
+airports = get_airport_list()
 
 def clear_flights():
     with app.app_context():
@@ -29,7 +30,7 @@ def create_flights():
                     db.session.commit()
 
 if __name__ == '__main__':
-    # clear_flights()
-    # create_flights()
+    clear_flights()
+    create_flights()
     clear_reservations()
     print('Bon voyage!')
