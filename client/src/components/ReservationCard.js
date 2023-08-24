@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 const airplaneEmoji = '\u2708'
 //opposite for airportDict used in ReservationForm
-const airportDict = {"EWR":"Newark","BOS":"Boston","DEN":"Denver","MUC":"Munich","HKG":"Hong Kong"}
+const airportDict = {"EWR":"Newark","BOS":"Boston","DEN":"Denver","MUC":"Munich","HKG":"Hong Kong","JFK":"New York City"}
 
 function ReservationCard({ flightId, reservationId, seat, confNum }) {
     const [ flight, setFlight ] = useState({origin:"",destination:""})

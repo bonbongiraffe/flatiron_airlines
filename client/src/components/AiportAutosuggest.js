@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Autosuggest from 'react-autosuggest'
 import '../styling/ReservationForm.css'
+import { LocationsContext } from '../context/locations'
 
+// const locations = useContext(LocationsContext)
 const locations = [
     {
         city: "Newark",
@@ -23,6 +25,10 @@ const locations = [
         city: "Hong Kong",
         airport: "HKG"
     },
+    {
+        city: "New York City",
+        airport: "JFK"
+    }
 ]
 
 const getSuggestions = value => {

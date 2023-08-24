@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from "react"
 import { UserContext } from '../context/user'
-import { useFormik, Field } from "formik"
+import { useFormik } from "formik"
 import * as yup from "yup"
 import AirportAutosuggest from "./AiportAutosuggest"
 
-const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
+const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG","New York City":"JFK"}
 
 const seatingChart = (openSeatslist=[]) => {
-    const emptyPlane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    // const emptyPlane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
     let chart = []
     for (let i = 0 ; i < 5 ; i++){ // <-- once for each row
         let row = []
@@ -130,7 +130,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
 
     return(
         <div className="d-flex justify-content-center align-items-center vh-100">
-            <form className="" style={{}}onSubmit={formik.handleSubmit}>
+            <form className="" style={{}} onSubmit={formik.handleSubmit}>
                 {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
                 {/*IF form container has width attribute --> for below row div style={{'--bs-gutter-x': 'unset', 'padding-right': 'rem'}} */}
                 <div className="row" >
