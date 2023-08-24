@@ -1,5 +1,5 @@
 import '../styling/App.css';
-import { React, useState, useEffect, useContext } from "react"
+import { React } from "react"
 import { Route, Routes, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar"
 import SignupForm from "./SignupForm"
