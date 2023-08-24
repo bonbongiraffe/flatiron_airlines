@@ -27,6 +27,10 @@
         {
             "city": "Tokyo",
             "airport": "HND"
+        },
+        {
+            "city": "Dallas",
+            "airport": "DFW"
         }
     ]
 }
