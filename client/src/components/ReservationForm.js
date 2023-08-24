@@ -1,31 +1,8 @@
 import { useState, useContext, useEffect } from "react"
 import { UserContext } from '../context/user'
-import { useFormik } from "formik"
+import { useFormik, Field } from "formik"
 import * as yup from "yup"
-// import Autosuggest from "react-autosuggest"
-
-const airportCities = [
-    {
-        city: "Newark",
-        airport: "EWR"
-    },
-    {
-        city: "Boston",
-        airport: "BOS"
-    },
-    {
-        city: "Denver",
-        airport: "DEN"
-    },
-    {
-        city: "Munich",
-        airport: "MUC"
-    },
-    {
-        city: "Hong Kong",
-        airport: "HKG"
-    },
-]
+import AirportAutosuggest from "./AiportAutosuggest"
 
 const airportDict = {"Newark":"EWR","Boston":"BOS","Denver":"DEN","Munich":"MUC","Hong Kong":"HKG"}
 
@@ -153,32 +130,33 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
 
     return(
         <div className="d-flex justify-content-center align-items-center vh-100">
-            <form className="" style={{width:'30rem'}}onSubmit={formik.handleSubmit}>
+            <form className="" style={{}}onSubmit={formik.handleSubmit}>
                 {(formik.isSubmitting && !error) ? <p>Reservation Confirmed!</p> : null }
-                <div className="row">
+                {/*IF form container has width attribute --> for below row div style={{'--bs-gutter-x': 'unset', 'padding-right': 'rem'}} */}
+                <div className="row" >
                     <div className="col">
                         <label className="form-titles" htmlFor="origin">Origin:</label>
-                            <input 
-                                onChange= {formik.handleChange}
-                                type="text"
-                                name= "origin"
-                                placeholder="origin..."
-                                className="form-control"
-                                value={formik.values.origin}
-                                list="cities"
-                            /><p>{formik.errors.origin}</p>
+                            <AirportAutosuggest
+                                inputProps={{
+                                    name: 'origin',
+                                    placeholder: 'City or Airport name...',
+                                    onChange: formik.handleChange,
+                                    value: formik.values.origin
+                                }}                        
+                            />                     
+                            <p>{formik.errors.origin}</p>                           
                     </div>
                     <div className="col">
                         <label className="form-titles" htmlFor="destination">Destination:</label>
-                            <input 
-                                onChange= {formik.handleChange}
-                                type="text"
-                                name= "destination"
-                                placeholder="destination..."
-                                className="form-control"
-                                value={formik.values.destination}
-                                list="cities"
-                            /><p>{formik.errors.destination}</p>
+                            <AirportAutosuggest
+                                inputProps={{
+                                    name: 'destination',
+                                    placeholder: 'City or Airport name...',
+                                    onChange: formik.handleChange,
+                                    value: formik.values.destination
+                                }}                        
+                            />                     
+                            <p>{formik.errors.destination}</p>   
                     </div>
                 </div>
                 <label className="form-titles" htmlFor="seat">Seat:</label>
