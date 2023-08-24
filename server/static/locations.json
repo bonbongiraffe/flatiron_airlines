@@ -23,6 +23,10 @@
         {
             "city": "New York City",
             "airport": "JFK"
+        },
+        {
+            "city": "Tokyo",
+            "airport": "HND"
         }
     ]
 }

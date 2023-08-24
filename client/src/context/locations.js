@@ -6,6 +6,8 @@ function LocationsProvider({children}){
     const [airportToCityMap, setAirportToCityMap] = useState({});
     const [cityToAirportMap, setCityToAirportMap] = useState({});
     const [locations, setLocations] = useState([]);
+    const [airports, setAirports] = useState([]);
+    const [cities, setCities] = useState([]);
 
     async function fetchData() {
       try {
@@ -24,6 +26,8 @@ function LocationsProvider({children}){
         setAirportToCityMap(airportToCity);
         setCityToAirportMap(cityToAirport);
         setLocations(data['locations']);
+        setAirports(Object.keys(airportToCity));
+        setCities(Object.values(airportToCity));
         // console.log( 'airport to city', airportToCityMap, 'city to airport', cityToAirportMap, 'locations', locations )
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -37,7 +41,7 @@ function LocationsProvider({children}){
       }, []);
 
     return (
-        <LocationsContext.Provider value={{ airportToCityMap, cityToAirportMap, locations }}>
+        <LocationsContext.Provider value={{ airportToCityMap, cityToAirportMap, locations, airports, cities }}>
            {children}
         </LocationsContext.Provider>
     )
