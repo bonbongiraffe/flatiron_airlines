@@ -2,13 +2,13 @@ import { useState, useContext, useEffect } from "react"
 import { UserContext } from '../context/user'
 import { LocationsContext } from "../context/locations"
 import { useFormik } from "formik"
-import AirportAutosuggest from "./AiportAutosuggest"
+import AirportAutosuggest from "./AiportAutosuggest" // <-- maybe deprecated 
 import * as yup from "yup"
 import * as assets from "../assets"
 
 function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",destination:""}, seat:0}, setReservation=null }) {
     const { user } = useContext(UserContext)
-    const { airports } = useContext(LocationsContext)
+    const { airports, locations } = useContext(LocationsContext)
     const [ error, setError ] = useState(null)
     const [ searchFlight, setSearchFlight ] = useState(null)
 
@@ -71,7 +71,7 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
     }
 
     useEffect(()=>{
-        console.log(airports)
+        // console.log(airports)
         if (!!formik.values.origin && !!formik.values.destination){
             if (airports.includes(formik.values.origin) && airports.includes(formik.values.destination)){
                 if (formik.values.origin === formik.values.destination){
@@ -93,6 +93,10 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
         }
     },[formik.values, error])
 
+    const airportOptions = locations.map( location => 
+        <option key={location.id} value={location.id_code}>{location.city} | {location.id_code}</option>
+    )
+
     if (!airports) return <div>Loading...</div>
 
     return(
@@ -103,22 +107,48 @@ function ReservationForm({ isEdit=false, reservation={id:0, flight:{origin:"",de
                 <div className="row" >
                     <div className="col">
                         <label className="form-titles" htmlFor="origin">Origin:</label>
-                            <AirportAutosuggest
+                            {/* <AirportAutosuggest
                                 name='origin'
                                 placeholder='City or Airport name...'
                                 onChange={formik.handleChange}
                                 value={formik.values.origin}                 
                             />                     
-                            <p>{formik.errors.origin}</p>                           
+                            <p>{formik.errors.origin}</p>                            */}
+                            <input 
+                                onChange={formik.handleChange}
+                                type="text"
+                                name="origin"
+                                placeholder="origin..."
+                                className="form-control"
+                                list='airportOptions'
+                                value={formik.values.origin}
+                            />
+                            <datalist id='airportOptions'>
+                                {airportOptions}
+                            </datalist> 
+                            <p>{formik.errors.origin}</p>
                     </div>
                     <div className="col">
                         <label className="form-titles" htmlFor="destination">Destination:</label>
-                            <AirportAutosuggest
+                            {/* <AirportAutosuggest
                                 name='destination'
                                 placeholder='City or Airport name...'
                                 onChange={formik.handleChange}
                                 value={formik.values.destination}                        
                             />                     
+                            <p>{formik.errors.destination}</p> */}
+                            <input 
+                                onChange={formik.handleChange}
+                                type="text"
+                                name="destination"
+                                placeholder="destination..."
+                                className="form-control"
+                                list='airportOptions'
+                                value={formik.values.destination}
+                            />
+                            <datalist id='airportOptions'>
+                                {airportOptions}
+                            </datalist> 
                             <p>{formik.errors.destination}</p>   
                     </div>
                 </div>
