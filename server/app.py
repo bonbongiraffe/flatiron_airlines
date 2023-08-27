@@ -56,16 +56,11 @@ class FlightsById(Resource):
 
 class Reservations(Resource):
     def post(self):
-        data = request.get_json()
-        flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
-        if not flight:
-            return make_response({'error':'Flight not found'},404)  
-        if data["seat"] not in flight.open_seats:
-            return make_response({'error':'Seat is already taken'},400)     
+        data = request.get_json() 
         try:
             new_reservation = Reservation(
                 user_id = data["user_id"],
-                flight_id = flight.id,
+                flight_id = data["flight_id"],
                 seat = data["seat"],
                 conf_number = conf_generator()
             )
@@ -123,6 +118,16 @@ api.add_resource(FlightsById,'/flights/<int:id>')
 api.add_resource(Reservations,'/reservations')
 api.add_resource(ReservationsByConf,'/reservations/<string:conf>')
 
+# query routes
+@app.route('/flight-query',methods=['POST'])
+def flight_query():
+    data = request.get_json()
+    flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
+    if flight: 
+        # print(flight.to_dict())
+        return make_response({**flight.to_dict(),'open_seats':flight.open_seats},200)
+    return make_response({'error':'Flight not found'},404)
+
 # auth routes
 @app.route('/login',methods=['POST'])
 def login():
@@ -172,6 +177,27 @@ def logout():
 def send_static(path):
     return send_from_directory('static',path)
 
+# deprecated methods
+# class Reservations(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
+#         if not flight:
+#             return make_response({'error':'Flight not found'},404)  
+#         if data["seat"] not in flight.open_seats:
+#             return make_response({'error':'Seat is already taken'},400)     
+#         try:
+#             new_reservation = Reservation(
+#                 user_id = data["user_id"],
+#                 flight_id = flight.id,
+#                 seat = data["seat"],
+#                 conf_number = conf_generator()
+#             )
+#             db.session.add(new_reservation)
+#             db.session.commit()
+#             return make_response(new_reservation.to_dict(),201)
+#         except ValueError as v_error:
+#             return make_response({'error':[v_error]},400)
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-    
