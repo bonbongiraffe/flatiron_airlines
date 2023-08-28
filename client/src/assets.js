@@ -44,7 +44,7 @@ export const newSeatingChart = (openSeatslist=[]) => {
             } else {
             seat = <button className='col'>xx</button>
             }
-            if (j == (i*4)+2) renderedSeats.push(<div className='col'>A</div>)
+            if (j === (i*4)+2) renderedSeats.push(<div className='col'>A</div>)
             renderedSeats.push(seat)
         }
         // console.log(row)

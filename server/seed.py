@@ -41,6 +41,7 @@ def clear_reservations():
         print('Deleting reservations...')
         Reservation.query.delete()
         db.session.commit()
+    # NEED delete boarding passes and qr codes
 
 def create_flights():
     print('Creating flights...')

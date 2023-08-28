@@ -2,12 +2,12 @@ import ReservationCard from "./ReservationCard"
 import { useEffect, useState, useContext } from "react"
 import { UserContext } from '../context/user'
 
-function Home({  }) {
+function MyFlights({  }) {
     const { user, setUser } = useContext(UserContext)
     const [ reservations, setReservations ] = useState([])
 
     useEffect(()=>{
-        document.title = 'Flatlines | Home'
+        document.title = 'Flatlines | MyFlights'
         fetch("/authorized")
             .then( r => {
             if (r.ok) {
@@ -34,4 +34,4 @@ function Home({  }) {
     )
 }
 
-export default Home
+export default MyFlights
