@@ -29,3 +29,32 @@ export const renderSeatingChart = (openSeatslist=[]) => {
     // console.log(chart)
     return chart
 }
+
+export const newSeatingChart = (openSeatslist=[]) => {
+    // const seatButton = {width:'2em'}
+    let renderedRows = []
+    for (let i = 0 ; i < 5 ; i++){ // <-- once for each row
+        let renderedSeats = []
+        for (let j = i*4 ; j < (i*4)+4 ; j++){ // <-- once for each seat
+            // console.log(j)
+            let seat = <button className='col'>default</button>
+            if ( openSeatslist.includes(j+1) ){
+                // console.log('seat in!')
+                seat = <button className='col'>{j+1}</button>
+            } else {
+            seat = <button className='col'>xx</button>
+            }
+            if (j == (i*4)+2) renderedSeats.push(<div className='col'>A</div>)
+            renderedSeats.push(seat)
+        }
+        // console.log(row)
+        let renderedRow = <div className='row'>
+            <div className='col'>W</div>
+            {renderedSeats}
+            <div className='col'>W</div>
+        </div>
+        renderedRows.push(renderedRow)
+    }
+    // console.log(chart)
+    return <div className=''>{renderedRows}</div>
+}
