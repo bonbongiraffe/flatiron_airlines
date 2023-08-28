@@ -3,7 +3,7 @@ import { LocationsContext } from "../context/locations"
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-function FlightSearch({ setFlights, type, setType }){
+function FlightSearch({ setFlight, type, setType }){
     const { locations } = useContext(LocationsContext)
 
     const toggleType = () => {
@@ -22,9 +22,9 @@ function FlightSearch({ setFlights, type, setType }){
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify({...values,type:type})
         })
-            .then( r => { if(r.ok) r.json().then(flights => {
-                console.log(flights)
-                // setFlights(flights => [...flights, newFlight])
+            .then( r => { if(r.ok) r.json().then(flight => {
+                // console.log(flight)
+                setFlight(flight)
             })})
         // if(type==='round-trip'){
             

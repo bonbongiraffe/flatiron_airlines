@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import * as assets from "../assets"
 import SeatChart from './SeatChart'
 
-function SeatSelection({ flight, user, setReservation }){
+function SeatSelection({ flight, user, setReservations }){
     const [ selectedSeat, setSelectedSeat ] = useState(null)
 
     // const formSchema = yup.object().shape({
@@ -31,7 +31,7 @@ function SeatSelection({ flight, user, setReservation }){
                 body: JSON.stringify({seat:selectedSeat, flight_id:flight.id, user_id:user.id})
             })
                 .then( r => {
-                    if(r.ok) r.json().then(reservation => setReservation(reservation))
+                    if(r.ok) r.json().then(newReservation => setReservations(reservation => [...reservation, newReservation]))
                 })
         }
 
