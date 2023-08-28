@@ -12,7 +12,6 @@ import { UserProvider  } from '../context/user';
 import { LocationsProvider } from '../context/locations';
 import ReservationManager from './ReservationManager';
 
-
 function App() {
   // const [ user, setUser ] = useState(null)
   const navigate = useNavigate()

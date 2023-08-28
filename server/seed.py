@@ -1,9 +1,16 @@
 from models import db, User, Reservation, Flight, Airport
 from app import app
-# from data_utils import get_airport_list
 import csv
+import os
 
-# airports = get_airport_list()
+def clear_files(directory_path):
+    for filename in os.listdir(directory_path):
+        file_path = os.path.join(directory_path,filename)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print(f'Error deleting {file_path}: {e}')
 
 def clear_airports():
     with app.app_context():
@@ -42,6 +49,10 @@ def clear_reservations():
         Reservation.query.delete()
         db.session.commit()
     # NEED delete boarding passes and qr codes
+    print('Deleting qr code png files...')
+    clear_files('./static/qr_codes')
+    print('Deleting boarding pass pdf files...')
+    clear_files('./static/boarding_passes')
 
 def create_flights():
     print('Creating flights...')

@@ -152,7 +152,17 @@ def flight_query():
     data = request.get_json()
     flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
     if flight: 
-        return make_response({**flight.to_dict(),'open_seats':flight.open_seats},200)
+        if data['type'] == 'one-way':
+            return make_response({**flight.to_dict(),'open_seats':flight.open_seats},200)
+        elif data['type'] == 'round-trip':
+            return_flight = Flight.query.filter_by(origin=data['destination'], destination=data['origin']).first()
+            if return_flight:
+                return make_response({'outgoing':{**flight.to_dict(),'open_seats':flight.open_seats},
+                    'returning':{**return_flight.to_dict(),'open_seats':return_flight.open_seats}
+                }, 200)
+            return make_response({'error':'Return flight not found'},404)
+        else:
+            return make_response({'error':'Invalid reservation type'},400)
     return make_response({'error':'Flight not found'},404)
 
 @app.route('/reservation-query',methods=['POST'])

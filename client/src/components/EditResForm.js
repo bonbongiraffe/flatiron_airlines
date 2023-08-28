@@ -99,7 +99,7 @@ function EditResForm(){
     }
 
     return (
-        <div>
+        <div className="d-flex justify-content-center align-items-center vh-100">
             {/* need to search for reservation */}
             { (!reservation && !confirmed) ? 
             <form onSubmit={formikSearch.handleSubmit}>
