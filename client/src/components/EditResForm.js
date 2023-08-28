@@ -119,8 +119,10 @@ function EditResForm(){
             { (reservation && !confirmed) ? 
                 // <form onSubmit={formikEdit.handleSubmit} style={{width:'30rem'}}>
                 <div className=''>
+                    <p>Passenger: {reservation.user.first_name} {reservation.user.last_name}</p>
                     <p>Origin: {reservation.flight.origin}</p>
                     <p>Destination: {reservation.flight.destination}</p>
+                    <p>Confirmation: {reservation.conf_number}</p>
                     { editSeat ? 
                     <div>
                         <h3>Seating Chart</h3>
