@@ -15,6 +15,9 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
     },[])
     
     const downloadBoardingPass = () => {
+        // const pdfUrl = `/export-boarding-pass/${confNum}` <-- for deployment
+        // const viewerUrl = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`
+        // window.open(viewerUrl,'_blank')
         fetch(`/export-boarding-pass/${confNum}`)
             .then( r => r.blob() )
             .then( blob => {
