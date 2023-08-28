@@ -13,6 +13,7 @@ flask-restful = "*"
 flask-bcrypt = "*"
 flask-cors = "*"
 qrcode = "*"
+reportlab = "*"
 
 [dev-packages]
 

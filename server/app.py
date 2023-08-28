@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 from models import User, Reservation, Flight, Airport
 from flask_restful import Api, Resource
-from flask import request, make_response, session, send_from_directory
+from flask import request, make_response, session, send_from_directory, send_file
 import os
 import ipdb
+import qrcode
+from qrcode.image.pure import PyPNGImage
+from reportlab.lib.units import mm
+from reportlab.lib.pagesizes import A6
+from reportlab.pdfgen import canvas
 import string, random
 
 from config import app, api, db
@@ -30,6 +35,31 @@ def conf_query(conf): # <-- queries reservations db by confirmation number
 def conf_generator(): # <-- generates random string of characters of length 5, among uppercase letters and digits
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choice(chars) for i in range(5))
+
+def boarding_pass(reservation): # <-- generates boarding pass, returns address of boarding pass .pdf file, relative from this directory
+    # qrcode
+    img = qrcode.make(f'{reservation.conf_number}', image_factory=PyPNGImage)
+    img.save(f'./static/qr_codes/{reservation.conf_number}.png')
+    qr_code = f'./static/qr_codes/{reservation.conf_number}.png'
+    # pdf file -- A6 dimensions: 105 mm x 148 mm 
+    boarding_pass = canvas.Canvas(f'./static/boarding_passes/{reservation.conf_number}.pdf', pagesize=A6)
+    text_info = boarding_pass.beginText()
+    text_info.setTextOrigin(17*mm, 135*mm)
+    text_info.setFont('Courier',12)
+    text_info.textLines(f'''
+        Flatlines
+
+        {reservation.flight.origin} - {reservation.flight.destination}
+        Passenger: {reservation.user.first_name} {reservation.user.last_name}
+        Flight: {'FL'+"{:03d}".format(reservation.flight.id)}
+        Seat: {reservation.seat}
+        Confirmation: {reservation.conf_number}
+    ''')
+    boarding_pass.drawText(text_info)
+    boarding_pass.drawImage(qr_code,5,0)
+    boarding_pass.save()
+    # finish
+    return f'./static/boarding_passes/{reservation.conf_number}.pdf'
 
 @app.route('/')
 def index():
@@ -66,6 +96,7 @@ class Reservations(Resource):
             )
             db.session.add(new_reservation)
             db.session.commit()
+            boarding_pass(new_reservation)
             return make_response(new_reservation.to_dict(),201)
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
@@ -106,6 +137,14 @@ api.add_resource(Flights,'/flights')
 api.add_resource(FlightsById,'/flights/<int:id>')
 api.add_resource(Reservations,'/reservations')
 api.add_resource(ReservationsById,'/reservations/<int:id>')
+
+# boarding pass
+@app.route('/print-boarding-pass/<string:conf>',methods=['GET'])
+def print_boarding_pass(conf):
+    reservation = Reservation.query.filter_by(conf_number=conf).first()
+    if not reservation:
+        return make_response({'error':'Reservation not found'},404)
+    return send_file(f'./static/boarding_passes/{reservation.conf_number}',as_attachment=True)
 
 # query routes
 @app.route('/flight-query',methods=['POST'])
