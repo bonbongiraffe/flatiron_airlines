@@ -30,7 +30,7 @@ function NavBar({ navigate }) {
                 <ul className="navbar-nav">
                     {user ? 
                     <> 
-                        <li className="nav-item"><NavLink className="nav-link" to="home">Home</NavLink></li>
+                        <li className="nav-item"><NavLink className="nav-link" to="my-flights">My Flights</NavLink></li>
                         <li className="nav-item"><NavLink className="nav-link" to="new-reservation">New Reservation</NavLink></li>
                         <li className="nav-item"><NavLink className="nav-link" to="manage-reservations">Manage Reservations</NavLink></li>
                     </>

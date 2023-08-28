@@ -7,7 +7,7 @@ import NavBar from "./NavBar"
 import SignupForm from "./SignupForm"
 import LoginForm from "./LoginForm"
 import ReservationForm from "./ReservationForm"
-import Home from "./Home"
+import MyFlights from "./MyFlights"
 import { UserProvider  } from '../context/user';
 import { LocationsProvider } from '../context/locations';
 import ReservationManager from './ReservationManager';
@@ -24,7 +24,7 @@ function App() {
         <LocationsProvider> 
         <NavBar navigate={navigate}/>
         <Routes>
-          <Route path='home' element={<Home/>}></Route>
+          <Route path='my-flights' element={<MyFlights/>}></Route>
           <Route path='new-reservation' element={<CreateResForm/>}></Route>
           <Route path='manage-reservations' element={<EditResForm/>}></Route>
           <Route path='signup' element={<SignupForm navigate={navigate}/>}></Route>

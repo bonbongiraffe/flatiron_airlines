@@ -12,6 +12,7 @@ ipdb = "*"
 flask-restful = "*"
 flask-bcrypt = "*"
 flask-cors = "*"
+qrcode = "*"
 
 [dev-packages]
 
