@@ -139,12 +139,12 @@ api.add_resource(Reservations,'/reservations')
 api.add_resource(ReservationsById,'/reservations/<int:id>')
 
 # boarding pass
-@app.route('/print-boarding-pass/<string:conf>',methods=['GET'])
-def print_boarding_pass(conf):
+@app.route('/export-boarding-pass/<string:conf>',methods=['GET'])
+def export_boarding_pass(conf):
     reservation = Reservation.query.filter_by(conf_number=conf).first()
     if not reservation:
         return make_response({'error':'Reservation not found'},404)
-    return send_file(f'./static/boarding_passes/{reservation.conf_number}',as_attachment=True)
+    return send_file(f'./static/boarding_passes/{reservation.conf_number}.pdf',as_attachment=True,mimetype='application/pdf')
 
 # query routes
 @app.route('/flight-query',methods=['POST'])

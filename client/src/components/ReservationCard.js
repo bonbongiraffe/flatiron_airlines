@@ -14,6 +14,23 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
             .then( f => setFlight(f))
     },[])
     
+    const downloadBoardingPass = () => {
+        fetch(`/export-boarding-pass/${confNum}`)
+            .then( r => r.blob() )
+            .then( blob => {
+                console.log(blob)
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `${confNum}_boarding_pass.pdf`
+                a.click()
+                URL.revokeObjectURL(url)
+            }) 
+            .catch( error => {
+                console.error('Error downloading boarding pass',error)
+            })
+    }
+
     if (!airportToCityMap) return <div className="card" style={{width: '25rem'}}>Loading...</div>
 
     // console.log( 'airport to city', airportToCityMap, 'city to airport', cityToAirportMap, 'locations', locations )
@@ -24,6 +41,7 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
             <h3>{airportToCityMap[flight.origin]} to {airportToCityMap[flight.destination]}</h3>
             <h3>{flight.origin} <span style={{fontFamily: 'Arial, sans-serif'}}>{airplaneEmoji}</span> {flight.destination}</h3>
             <h3>seat: {seat}</h3>
+            <button onClick={()=>downloadBoardingPass()}>Download Boarding Pass</button>
         </div>
     )
 }
