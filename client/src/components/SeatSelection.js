@@ -66,6 +66,7 @@ function SeatSelection({ flight, user, setReservation }){
     // }
     return (
         <div className=''>
+            <p>Origin: {flight.origin} - Destination: {flight.destination}</p>
             <h3>Seating Chart</h3>
             {assets.seatingChartLegend}
             <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
