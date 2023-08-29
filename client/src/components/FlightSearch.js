@@ -26,9 +26,6 @@ function FlightSearch({ setFlight, type, setType }){
                 // console.log(flight)
                 setFlight(flight)
             })})
-        // if(type==='round-trip'){
-            
-        // }
     }
 
     const formik = useFormik({

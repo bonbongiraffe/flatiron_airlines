@@ -123,9 +123,6 @@ class Airport(db.Model, SerializerMixin):
     city = db.Column(db.String)
     id_code = db.Column(db.String)
 
-    #serialization
-    # serialize_rules = ('-id',)
-
     #repr
     def __repr__(self):
         return f'<id:{self.id}, city:{self.city}, id_code:{self.id_code}>'

@@ -48,7 +48,6 @@ def clear_reservations():
         print('Deleting reservations...')
         Reservation.query.delete()
         db.session.commit()
-    # NEED delete boarding passes and qr codes
     print('Deleting qr code png files...')
     clear_files('./static/qr_codes')
     print('Deleting boarding pass pdf files...')

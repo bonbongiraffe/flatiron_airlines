@@ -1,8 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import { LocationsContext } from "../context/locations"
 const airplaneEmoji = '\u2708'
-//opposite for airportDict used in ReservationForm
-// const airportDict = {"EWR":"Newark","BOS":"Boston","DEN":"Denver","MUC":"Munich","HKG":"Hong Kong","JFK":"New York City"}
 
 function ReservationCard({ flightId, reservationId, seat, confNum }) {
     const [ flight, setFlight ] = useState({origin:"",destination:""})
@@ -35,8 +33,6 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
     }
 
     if (!airportToCityMap) return <div className="card" style={{width: '25rem'}}>Loading...</div>
-
-    // console.log( 'airport to city', airportToCityMap, 'city to airport', cityToAirportMap, 'locations', locations )
     
     return(
         <div className="card" style={{width: '25rem'}}>
