@@ -220,70 +220,7 @@ def logout():
 
 @app.route('/static/<path:path>')
 def send_static(path):
-    return send_from_directory('static',path)
-
-# deprecated methods
-    # class Reservations(Resource):
-    #     def post(self):
-    #         data = request.get_json()
-    #         flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
-    #         if not flight:
-    #             return make_response({'error':'Flight not found'},404)  
-    #         if data["seat"] not in flight.open_seats:
-    #             return make_response({'error':'Seat is already taken'},400)     
-    #         try:
-    #             new_reservation = Reservation(
-    #                 user_id = data["user_id"],
-    #                 flight_id = flight.id,
-    #                 seat = data["seat"],
-    #                 conf_number = conf_generator()
-    #             )
-    #             db.session.add(new_reservation)
-    #             db.session.commit()
-    #             return make_response(new_reservation.to_dict(),201)
-    #         except ValueError as v_error:
-    #             return make_response({'error':[v_error]},400)
-    # class ReservationsByConf(Resource):
-    # def get(self,conf):
-    #     reservation = conf_query(conf)
-    #     if hasattr(reservation,'error'):
-    #         return reservation
-    #     print(reservation)
-    #     return make_response(reservation.to_dict(),200)
-    
-    # def delete(self,conf):
-    #     reservation = conf_query(conf)
-    #     if hasattr(reservation,'error'):
-    #         return reservation
-    #     db.session.delete(reservation)
-    #     db.session.commit()
-    #     return make_response({'message':'Reservation deleted'},204)
-    
-    # def patch(self,conf):
-    #     # print(conf)
-    #     reservation = conf_query(conf)
-    #     if hasattr(reservation,'error'):
-    #         return reservation
-    #     try:
-    #         data = request.get_json()
-    #         # print(data,"from form")
-    #         for attr in data:
-    #             if attr not in ['origin','destination','id']:
-    #                 # print(attr)
-    #                 setattr(reservation, attr, data[attr])
-    #         if 'origin' in data.keys():
-    #             # print("about to search for flights")
-    #             flight = Flight.query.filter_by(origin=data['origin'], destination=data['destination']).first()
-    #             if not flight:
-    #                 return make_response({'error':'Flight not found'},404) 
-    #             # print(flight,"flight print")
-    #             reservation.flight_id = flight.id 
-    #         # print(reservation,"reservation print") 
-    #         db.session.add(reservation)
-    #         db.session.commit()
-    #         return make_response(reservation.to_dict(),200)
-    #     except ValueError as v_error:
-    #         return make_response({'error':[v_error]},400)
+    return send_from_directory('static',path)    
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
