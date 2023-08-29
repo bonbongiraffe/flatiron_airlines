@@ -1,21 +1,17 @@
 import '../styling/App.css';
 import { React } from "react"
-import { Route, Routes, useNavigate } from "react-router-dom";
-import CreateResForm from './CreateResForm';
-import EditResForm from './EditResForm';
+import { Route, Routes, useNavigate } from "react-router-dom"
+import CreateResForm from './CreateResForm'
+import EditResForm from './EditResForm'
 import NavBar from "./NavBar"
 import SignupForm from "./SignupForm"
 import LoginForm from "./LoginForm"
-import ReservationForm from "./ReservationForm"
 import MyFlights from "./MyFlights"
-import { UserProvider  } from '../context/user';
-import { LocationsProvider } from '../context/locations';
-import ReservationManager from './ReservationManager';
+import { UserProvider  } from '../context/user'
+import { LocationsProvider } from '../context/locations'
 
 function App() {
-  // const [ user, setUser ] = useState(null)
   const navigate = useNavigate()
-  // console.log("from App.js",user)
 
   return (
     <div className="App">
