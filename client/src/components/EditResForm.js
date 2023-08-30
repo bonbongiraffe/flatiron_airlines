@@ -67,7 +67,8 @@ function EditResForm(){
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-50 bg-light">
+        <div className="d-flex flex-column justify-content-center align-items-center vh-50 bg-light">
+            <h4 className='mb-4'>Manage Reservations</h4>
             {/* need to search for reservation */}
             { (!reservation && !confirmed) ? 
             <form onSubmit={formikSearch.handleSubmit}>
@@ -80,8 +81,8 @@ function EditResForm(){
                     className="form-control"
                     value={formikSearch.values.confNum}
                 />
-                <p>{formikSearch.errors.confNum}</p>
-                <button className='btn btn-outline-primary' type='submit'>Edit</button>
+                <p style={{minHeight:'2rem'}}>{formikSearch.errors.confNum}</p>
+                <button className='btn btn-outline-primary mb-2' type='submit'>Edit</button>
             </form> : null }
             {/* // editing reservation */}
             { (reservation && !confirmed) ? 

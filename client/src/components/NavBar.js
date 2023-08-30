@@ -36,8 +36,8 @@ function NavBar({ navigate }) {
                     </>
                     :
                     <>
-                        <li className="nav-item"><button className="nav-link" onClick={()=> navigate('signup')}>Signup</button></li>
-                        <li className="nav-item"><button className="nav-link" onClick={()=> navigate('login')}>Login</button></li>
+                        <li className="nav-item"><button className="nav-link btn btn-outline-primary" onClick={()=> navigate('signup')}>Signup</button></li>
+                        <li className="nav-item"><button className="nav-link btn btn-outline-success" onClick={()=> navigate('login')}>Login</button></li>
                     </>
                     }               
                 </ul>
@@ -45,7 +45,7 @@ function NavBar({ navigate }) {
             <div className="navbar-text">
                 { user ? <p className="hello">Welcome, {user.first_name}</p> : null}
             </div>
-            { user ? <button className="btn" onClick={handleLogout}>Logout</button> : null}
+            { user ? <button className="btn btn-outline-secondary" onClick={handleLogout}>Logout</button> : null}
         </nav>
     )
 }
