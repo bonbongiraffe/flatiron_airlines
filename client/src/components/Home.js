@@ -5,6 +5,7 @@ import brussels from '../assets/locations/brussels-01.JPG'
 import tokyo from '../assets/locations/tokyo-01.JPG'
 import vancouver from '../assets/locations/vancouver-01.JPG'
 import hongkong from '../assets/locations/hongkong-01.JPG'
+import munich from '../assets/locations/munich-01.JPG'
 
 import { ReactComponent as WorldMap } from '../assets/worldmap.svg'
 
@@ -40,6 +41,11 @@ function Home(){
             path: hongkong,
             name: 'Art Museum Postcard',
             location: 'Hong Kong, Hong Kong (HKG)'
+        },
+        {
+            path: munich,
+            name: 'Town square',
+            location: 'Munich, Germany (MUC)'
         }
     ]
 
