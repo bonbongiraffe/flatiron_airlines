@@ -211,7 +211,7 @@ def authorized():
         user = User.query.filter_by(id=session.get('user_id')).first()
         return make_response(user.to_dict(),200)
     except:
-        return make_response({'message':'Please login or signup'},404)
+        return make_response({'message':'Please login or signup'},401)
 
 @app.route('/logout',methods=['DELETE'])
 def logout():

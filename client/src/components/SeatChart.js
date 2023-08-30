@@ -8,12 +8,12 @@ function SeatChart({openSeatslist=[], selectedSeat, setSelectedSeat}){
             // console.log(j)
             let seat = <button key='seat-default' className='col'>default</button>
             if ( openSeatslist.includes(j+1) ){
-                // console.log('seat in!')
-                seat = <button key={`seat-${j+1}`} className='col' onClick={()=>setSelectedSeat(j+1)}>{j+1}</button>
+                if((j+1) === selectedSeat) seat = <button key={`seat-${j+1}`} className='col btn btn-success' onClick={()=>setSelectedSeat(j+1)}>{j+1}</button>
+                else seat = <button key={`seat-${j+1}`} className='col btn btn-outline-secondary' onClick={()=>setSelectedSeat(j+1)}>{j+1}</button>
             } else {
-            seat = <button key={`seat-taken-${j+1}`} className='col'>xx</button>
+            seat = <button key={`seat-taken-${j+1}`} className='col btn btn-outline-danger' disabled>X</button>
             }
-            if (j == (i*4)+2) renderedSeats.push(<div key='aisle' className='col'>A</div>)
+            if (j === (i*4)+2) renderedSeats.push(<div key='aisle' className='col'>A</div>)
             renderedSeats.push(seat)
         }
         // console.log(row)

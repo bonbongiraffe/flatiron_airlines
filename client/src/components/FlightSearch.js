@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { LocationsContext } from "../context/locations"
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -49,9 +49,10 @@ function FlightSearch({ setFlight, type, setType }){
 
     return( 
         <form onSubmit={formik.handleSubmit}>
-            <div className='row'>
+            <h4 className='mb-4'>Flight Search</h4>
+            <div className='row mb-4'>
                 <div className='col'>
-                    <label>Origin:</label>
+                    <label style={{width:'20rem'}}>Origin:</label>
                     <input 
                         onChange={formik.handleChange}
                         type="text"
@@ -64,10 +65,10 @@ function FlightSearch({ setFlight, type, setType }){
                     <datalist id='airportOptions'>
                         {airportOptions}
                     </datalist> 
-                    <p>{formik.errors.origin}</p>
+                    <p style={{minHeight:'2rem'}}>{formik.errors.origin ? formik.errors.origin : null}</p>
                 </div>
                 <div className='col'>
-                    <fieldset>
+                    <fieldset className='mb-2'>
                         <div>
                             <input type='radio' id='one-way' name='type' checked={type==='one-way'} onChange={()=>toggleType()}/>
                             <label htmlFor='one-way'>One-way</label>
@@ -77,10 +78,10 @@ function FlightSearch({ setFlight, type, setType }){
                             <label htmlFor='round-trip'>Round-trip</label>
                         </div>
                     </fieldset>
-                    <button onClick={()=>handleSwitch()} type='button'>⇆</button>
+                    <button className=' btn btn-outline-secondary'onClick={()=>handleSwitch()} type='button'>⇆</button>
                 </div>
                 <div className='col'>
-                    <label>Destination:</label>
+                    <label style={{width:'20rem'}}>Destination:</label>
                     <input 
                         onChange={formik.handleChange}
                         type="text"
@@ -93,10 +94,10 @@ function FlightSearch({ setFlight, type, setType }){
                     <datalist id='airportOptions'>
                         {airportOptions}
                     </datalist> 
-                    <p>{formik.errors.destination}</p>
+                    <p style={{minHeight:'2rem'}}>{formik.errors.destination ? formik.errors.destination : null}</p>
                 </div>
             </div>
-            <button type='submit'>Search Flights</button>
+            <button className='btn btn-outline-primary mb-3' type='submit'>Search Flights</button>
         </form>
     )
 }
