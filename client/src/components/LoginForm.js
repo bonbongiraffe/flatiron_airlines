@@ -10,7 +10,7 @@ function LoginForm({ navigate }) {
 
     const formSchema = yup.object().shape({
         email: yup.string().email("Invalid email").required("Must enter email"),
-        password: yup.string().min(5,'Password must be at least 5 characters long').required('Must enter a password')
+        password: yup.string().min(5,'').required('Must enter a password')
     })
 
     const handleLogin = (values) => {
@@ -48,7 +48,7 @@ function LoginForm({ navigate }) {
                             placeholder="email..."
                             className="form-control"
                             value={formik.values.email}
-                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.email}</p>
+                        /><p style={{minHeight:'2rem', minWidth:'20rem', color:'white'}}>{formik.errors.email}</p>
                     </div>
                     <div className="col">
                         <input 
@@ -58,7 +58,7 @@ function LoginForm({ navigate }) {
                             placeholder="password..."
                             className="form-control"
                             value={formik.values.password}
-                        /><p style={{minHeight:'2rem', maxWidth:'13rem', color:'white'}}>{formik.errors.password}</p>
+                        /><p style={{minHeight:'2rem', minWidth:'20rem', color:'white'}}>{formik.errors.password}</p>
                     </div>
                 </div>
                 <button className='btn btn-primary'type='submit'>Login</button>
