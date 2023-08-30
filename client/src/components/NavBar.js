@@ -18,7 +18,7 @@ function NavBar({ navigate }) {
         }
 
     return(
-        <nav className="navbar navbar-light justify-content-center navbar-expand-lg bg-light border-bottom">
+        <nav className="navbar navbar-light justify-content-center navbar-expand-lg bg-light border-bottom mb-3">
             <a class="navbar-brand" href="home">
                 {/* <img className="d-inline align-top"src="static/flatlines192.png" width="45" height="45" alt=""/> */}
                 Unity Airlines

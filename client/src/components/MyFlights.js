@@ -28,7 +28,7 @@ function MyFlights({  }) {
 
     if (!user) return <h1>loading</h1>
     return(
-        <div className='d-flex justify-content-center align-items-center vh-100'>
+        <div className='container d-flex justify-content-center align-items-center'>
             {renderedReservations}
         </div>
     )

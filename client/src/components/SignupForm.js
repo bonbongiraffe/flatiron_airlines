@@ -41,7 +41,7 @@ function SignupForm({ navigate }) {
     })
 
     return(
-        <div className="form">
+        <div className="d-flex justify-content-center align-items-center">
             <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col">
@@ -52,7 +52,7 @@ function SignupForm({ navigate }) {
                             placeholder="first name..."
                             className="form-control"
                             value={formik.values.firstName}
-                        /><p>{formik.errors.firstName}</p>
+                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.firstName}</p>
                     </div>
                     <div className="col">
                         <input 
@@ -62,7 +62,7 @@ function SignupForm({ navigate }) {
                             placeholder="last name..."
                             className="form-control"
                             value={formik.values.lastName}
-                        /><p>{formik.errors.lastName}</p>
+                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.lastName}</p>
                     </div>
                 </div>
                 <div className="row">
@@ -74,7 +74,7 @@ function SignupForm({ navigate }) {
                             placeholder="email..."
                             className="form-control"
                             value={formik.values.email}
-                        /><p>{formik.errors.email}</p>
+                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.email}</p>
                     </div>
                     <div className="col">
                         <input 
@@ -84,10 +84,10 @@ function SignupForm({ navigate }) {
                             placeholder="password..."
                             className="form-control"
                             value={formik.values.password}
-                        /><p>{formik.errors.password}</p>
+                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.password}</p>
                     </div>
                 </div>
-                <button type='submit'>Signup</button>
+                <button className='btn btn-primary' type='submit'>Signup</button>
             </form>
         </div>
     )

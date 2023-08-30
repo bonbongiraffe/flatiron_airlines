@@ -9,24 +9,24 @@ function SeatChart({openSeatslist=[], selectedSeat, setSelectedSeat}){
             let seat = <button key='seat-default' className='col'>default</button>
             if ( openSeatslist.includes(j+1) ){
                 if((j+1) === selectedSeat) seat = <button key={`seat-${j+1}`} className='col btn btn-success' onClick={()=>setSelectedSeat(j+1)}>{j+1}</button>
-                else seat = <button key={`seat-${j+1}`} className='col btn btn-outline-secondary' onClick={()=>setSelectedSeat(j+1)}>{j+1}</button>
+                else seat = <button key={`seat-${j+1}`} className='col btn btn-outline-light' onClick={()=>setSelectedSeat(j+1)}>{j+1}</button>
             } else {
             seat = <button key={`seat-taken-${j+1}`} className='col btn btn-outline-danger' disabled>X</button>
             }
-            if (j === (i*4)+2) renderedSeats.push(<div key='aisle' className='col'>A</div>)
+            if (j === (i*4)+2) renderedSeats.push(<div key='aisle' className='col' style={{color:'white'}}>A</div>)
             renderedSeats.push(seat)
         }
         // console.log(row)
         let renderedRow = <div key={`row-${i+1}`}className='row'>
-            <div key='left-window' className='col'>W</div>
+            <div key='left-window' className='col' style={{color:'white'}}>W</div>
             {renderedSeats}
-            <div key='right-window' className='col'>W</div>
+            <div key='right-window' className='col' style={{color:'white'}}>W</div>
         </div>
         renderedRows.push(renderedRow)
     }
     
     return (
-        <div className=''>{renderedRows}</div>
+        <div className='container mb-3 mt-3 bg-dark'>{renderedRows}</div>
     )
 }
 

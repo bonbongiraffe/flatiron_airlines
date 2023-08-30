@@ -67,12 +67,12 @@ function EditResForm(){
     }
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center vh-50 bg-light">
-            <h4 className='mb-4'>Manage Reservations</h4>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+            <h4 className='mb-4' style={{color:'white'}}>Manage Reservations</h4>
             {/* need to search for reservation */}
             { (!reservation && !confirmed) ? 
             <form onSubmit={formikSearch.handleSubmit}>
-            <label className="form-titles" htmlFor="confirmation-number">Confirmation #:</label>
+            <label className="form-titles" style={{color:'white'}} htmlFor="confirmation-number">Confirmation #:</label>
                 <input 
                     onChange= {formikSearch.handleChange}
                     type="text"
@@ -81,8 +81,8 @@ function EditResForm(){
                     className="form-control"
                     value={formikSearch.values.confNum}
                 />
-                <p style={{minHeight:'2rem'}}>{formikSearch.errors.confNum}</p>
-                <button className='btn btn-outline-primary mb-2' type='submit'>Edit</button>
+                <p style={{minHeight:'2rem',color:'white'}}>{formikSearch.errors.confNum}</p>
+                <button className='btn btn-primary mb-2' type='submit'>Edit</button>
             </form> : null }
             {/* // editing reservation */}
             { (reservation && !confirmed) ? 
@@ -104,13 +104,13 @@ function EditResForm(){
                 </div> : null }
             {/* // after successful edit */}
             { (reservation && confirmed) ? 
-            <div className='bg-light'>
+            <div className='container' style={{color:'white'}}>
                 <p>Your reservation has been revised.</p>
                 <p>Thank you for flying with Unity!</p>
             </div> : null }
             {/* // after successful cancellation */}
             { (!reservation && confirmed) ? 
-            <div className='bg-light'>
+            <div className='container' style={{color:'white'}}>
                 <p>Your reservation has been cancelled.</p>
                 <p>We hope to see you again soon!</p>
             </div> : null }

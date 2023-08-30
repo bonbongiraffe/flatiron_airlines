@@ -19,12 +19,12 @@ function SeatSelection({ flight, user, setReservations }){
 
     return (
         <div className='mb-5'>
-            <h3>Flight</h3>
-            <p>Origin: {flight.origin} - Destination: {flight.destination}</p>
-            <h3>Seating Chart</h3>
+            <h3 style={{color:'white'}}>Flight</h3>
+            <p style={{color:'white'}}>Origin: {flight.origin} - Destination: {flight.destination}</p>
+            <h3 style={{color:'white'}}>Seating Chart</h3>
             {assets.seatingChartLegend}
             <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
-            {selectedSeat ? <p>Seat {selectedSeat} selected</p> : null}
+            {selectedSeat ? <p style={{color:'white'}}>Seat {selectedSeat} selected</p> : null}
             {selectedSeat ? <button className='btn btn-primary' onClick={()=>handleSubmit()}>Reserve</button> : null}
         </div>
     )

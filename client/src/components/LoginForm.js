@@ -37,7 +37,7 @@ function LoginForm({ navigate }) {
     })
 
     return(
-        <div className="form">
+        <div className="d-flex justify-content-center align-items-center">
             <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col">
@@ -48,7 +48,7 @@ function LoginForm({ navigate }) {
                             placeholder="email..."
                             className="form-control"
                             value={formik.values.email}
-                        /><p>{formik.errors.email}</p>
+                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.email}</p>
                     </div>
                     <div className="col">
                         <input 
@@ -58,10 +58,10 @@ function LoginForm({ navigate }) {
                             placeholder="password..."
                             className="form-control"
                             value={formik.values.password}
-                        /><p>{formik.errors.password}</p>
+                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.password}</p>
                     </div>
                 </div>
-                <button type='submit'>Login</button>
+                <button className='btn btn-primary'type='submit'>Login</button>
             </form>
         </div>
     )
