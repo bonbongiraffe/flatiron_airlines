@@ -21,7 +21,7 @@ function NavBar({ navigate }) {
         <nav className="navbar navbar-light justify-content-center navbar-expand-lg bg-light border-bottom mb-3">
             <a class="navbar-brand" href="home">
                 {/* <img className="d-inline align-top"src="static/flatlines192.png" width="45" height="45" alt=""/> */}
-                Unity Airlines
+                Flatiron Airlines
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

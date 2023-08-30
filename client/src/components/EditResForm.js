@@ -86,7 +86,7 @@ function EditResForm(){
             </form> : null }
             {/* // editing reservation */}
             { (reservation && !confirmed) ? 
-                <div className=''>
+                <div className='container' style={{color:'white'}}>
                     <p>Passenger: {reservation.user.first_name} {reservation.user.last_name}</p>
                     <p>Origin: {reservation.flight.origin}</p>
                     <p>Destination: {reservation.flight.destination}</p>
