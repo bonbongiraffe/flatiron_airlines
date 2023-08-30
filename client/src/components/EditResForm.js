@@ -67,11 +67,12 @@ function EditResForm(){
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="d-flex flex-column justify-content-center align-items-center">
+            <h4 className='mb-4' style={{color:'white'}}>Manage Reservations</h4>
             {/* need to search for reservation */}
             { (!reservation && !confirmed) ? 
             <form onSubmit={formikSearch.handleSubmit}>
-            <label className="form-titles" htmlFor="confirmation-number">Confirmation #:</label>
+            <label className="form-titles" style={{color:'white'}} htmlFor="confirmation-number">Confirmation #:</label>
                 <input 
                     onChange= {formikSearch.handleChange}
                     type="text"
@@ -80,12 +81,12 @@ function EditResForm(){
                     className="form-control"
                     value={formikSearch.values.confNum}
                 />
-                <p>{formikSearch.errors.confNum}</p>
-                <button type='submit'>Edit</button>
+                <p style={{minHeight:'2rem',color:'white'}}>{formikSearch.errors.confNum}</p>
+                <button className='btn btn-primary mb-2' type='submit'>Edit</button>
             </form> : null }
             {/* // editing reservation */}
             { (reservation && !confirmed) ? 
-                <div className=''>
+                <div className='container' style={{color:'white'}}>
                     <p>Passenger: {reservation.user.first_name} {reservation.user.last_name}</p>
                     <p>Origin: {reservation.flight.origin}</p>
                     <p>Destination: {reservation.flight.destination}</p>
@@ -96,20 +97,20 @@ function EditResForm(){
                         {assets.seatingChartLegend}
                         <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
                         {selectedSeat ? <p>Seat {selectedSeat} selected</p> : null}
-                        {selectedSeat ? <button onClick={()=>handleSubmit()}>Revise Reservation</button> : null}
+                        {selectedSeat ? <button className='btn btn-primary' onClick={()=>handleSubmit()}>Revise Reservation</button> : null}
                     </div> : <p>Seat: {reservation.seat}</p>}
-                    { editSeat ? null : <button onClick={() => setEditSeat(true)}>Change Seat</button>}
-                    <button onClick={() => handleCancel()}>Cancel Reservation</button>
+                    { editSeat ? null : <button className='btn btn-success' onClick={() => setEditSeat(true)}>Change Seat</button>}
+                    <button className='btn btn-danger' onClick={() => handleCancel()}>Cancel Reservation</button>
                 </div> : null }
             {/* // after successful edit */}
             { (reservation && confirmed) ? 
-            <div>
+            <div className='container' style={{color:'white'}}>
                 <p>Your reservation has been revised.</p>
                 <p>Thank you for flying with Unity!</p>
             </div> : null }
             {/* // after successful cancellation */}
             { (!reservation && confirmed) ? 
-            <div>
+            <div className='container' style={{color:'white'}}>
                 <p>Your reservation has been cancelled.</p>
                 <p>We hope to see you again soon!</p>
             </div> : null }

@@ -7,8 +7,8 @@ export const openSeatingChart = <>
     </>
 
 export const seatingChartLegend = <ul className="list-unstyled">
-        <li className="list-item">W = window</li>
-        <li className="list-item">A = aisle</li>
+        <li className="list-item" style={{color:'white'}}>W = window</li>
+        <li className="list-item" style={{color:'white'}}>A = aisle</li>
     </ul>
 
 export const renderSeatingChart = (openSeatslist=[]) => {

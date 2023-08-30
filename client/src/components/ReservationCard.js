@@ -4,7 +4,8 @@ const airplaneEmoji = '\u2708'
 
 function ReservationCard({ flightId, reservationId, seat, confNum }) {
     const [ flight, setFlight ] = useState({origin:"",destination:""})
-    const { airportToCityMap, cityToAirportMap, locations } = useContext(LocationsContext)
+    const { airportToCityMap } = useContext(LocationsContext)
+    const [ isCopied, setIsCopied ] = useState(false)
 
     useEffect(()=>{
         fetch(`flights/${flightId}`)
@@ -32,15 +33,26 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
             })
     }
 
+    const handleCopyToClipboard = () => {
+        navigator.clipboard.writeText(confNum)
+            .then(()=>{
+                setIsCopied(true)
+                setTimeout(()=>{setIsCopied(false)},2000)
+            })
+            .catch((error) => console.error('Failed to copy to clipboard:',error))
+    }
+
     if (!airportToCityMap) return <div className="card" style={{width: '25rem'}}>Loading...</div>
     
     return(
-        <div className="card" style={{width: '25rem'}}>
-            <h3 className="card-title">confirmation: {confNum}</h3>
-            <h3>{airportToCityMap[flight.origin]} to {airportToCityMap[flight.destination]}</h3>
-            <h3>{flight.origin} <span style={{fontFamily: 'Arial, sans-serif'}}>{airplaneEmoji}</span> {flight.destination}</h3>
-            <h3>seat: {seat}</h3>
-            <button onClick={()=>downloadBoardingPass()}>Download Boarding Pass</button>
+        <div className="card bg-light border-dark" style={{width:'20rem'}}>
+            <div className='card-header'><b>Flight:</b> {flight.origin} <span style={{fontFamily: 'Arial, sans-serif'}}>{airplaneEmoji}</span> {flight.destination}</div>
+            <div className='card-subtitle text-muted'>{airportToCityMap[flight.origin]} to {airportToCityMap[flight.destination]}</div>
+            <div className='card-body'>
+                <div className='card-text' onClick={()=>handleCopyToClipboard()}><b>Confirmation:</b> {confNum} <button className='btn btn-outline-dark' onClick={()=>handleCopyToClipboard()}>{ isCopied ? 'Copied!' : '📋' }</button></div>
+                <div className='card-text mb-2'><b>Seat:</b> {seat}</div>
+                <button className='btn btn-outline-primary' onClick={()=>downloadBoardingPass()}  style={{width:'13rem'}}>Download Boarding Pass</button>
+            </div>
         </div>
     )
 }
