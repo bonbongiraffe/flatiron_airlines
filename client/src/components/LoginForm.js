@@ -58,7 +58,7 @@ function LoginForm({ navigate }) {
                             placeholder="password..."
                             className="form-control"
                             value={formik.values.password}
-                        /><p style={{minHeight:'2rem', color:'white'}}>{formik.errors.password}</p>
+                        /><p style={{minHeight:'2rem', maxWidth:'13rem', color:'white'}}>{formik.errors.password}</p>
                     </div>
                 </div>
                 <button className='btn btn-primary'type='submit'>Login</button>
