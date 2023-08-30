@@ -31,12 +31,14 @@ function NavBar({ navigate }) {
                 <ul className="navbar-nav">
                     {user ? 
                     <> 
+                        <li className="nav-item"><NavLink style={{color:'white'}} className="nav-link" to="home">Home</NavLink></li>
                         <li className="nav-item"><NavLink style={{color:'white'}} className="nav-link" to="my-flights">My Flights</NavLink></li>
                         <li className="nav-item"><NavLink style={{color:'white'}} className="nav-link" to="new-reservation">New Reservation</NavLink></li>
                         <li className="nav-item"><NavLink style={{color:'white'}} className="nav-link" to="manage-reservations">Manage Reservations</NavLink></li>
                     </>
                     :
                     <>
+                        <li className="nav-item"><NavLink style={{color:'white'}} className="nav-link" to="home">Home</NavLink></li>
                         <li className="nav-item"><button style={{color:'white'}} className="nav-link btn btn-outline-primary mx-1" onClick={()=> navigate('signup')}>Signup</button></li>
                         <li className="nav-item"><button style={{color:'white'}} className="nav-link btn btn-outline-success mx-1" onClick={()=> navigate('login')}>Login</button></li>
                     </>
