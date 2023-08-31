@@ -1,0 +1,9 @@
+.pin {
+    position: absolute;
+    width: 20px;
+    transition: transform 0.3s, width 0.3s, height 0.3s;
+}
+
+.pin:hover {
+    transform: scale(1.3);
+}

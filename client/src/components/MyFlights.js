@@ -27,8 +27,10 @@ function MyFlights({  }) {
     />)
 
     if (!user) return <h1>loading</h1>
+
     return(
         <div className='container d-flex justify-content-center align-items-center'>
+            {reservations.length === 0 ? <div style={{color:'white'}}>You have no upcoming flights</div> : null}
             {renderedReservations}
         </div>
     )

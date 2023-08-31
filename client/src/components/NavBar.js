@@ -20,9 +20,9 @@ function NavBar({ navigate }) {
 
     return(
         <nav className="navbar navbar-light justify-content-center navbar-expand-lg bg-dark border-bottom mb-3">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="home">
                 <img className="d-inline-block align-top mx-3" src={logo} width="45" height="45" alt="flatiron airlines logo"/>
-                <span className='' style={{color:'white'}}>Flatiron Airlines</span>
+                <span className='' style={{color:'white'}}><b>Flatiron Airlines</b></span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
