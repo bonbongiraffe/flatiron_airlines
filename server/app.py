@@ -128,6 +128,14 @@ class ReservationsById(Resource):
                 setattr(reservation, attr, data[attr])
             db.session.add(reservation)
             db.session.commit()
+            try: 
+                qr_path = f'./static/qr_codes/{reservation.conf_number}.png'
+                pdf_path = f'./static/boarding_passes/{reservation.conf_number}.pdf'
+                os.unlink(qr_path)
+                os.unlink(pdf_path)
+                boarding_pass(reservation)
+            except Exception as e:
+                return make_response({'error':e},400)
             return make_response(reservation.to_dict(),200)
         except ValueError as v_error:
             return make_response({'error':[v_error]},400)
