@@ -75,7 +75,7 @@ Clone the `flatiron_airlines` repository onto your local machine and simply run 
 
 ## Acknowledgements
 - To Adam and Emiley for being the best instructors at Flatiron School
-- To Jon, Amelia, Jessica, Sebastian, Shanley for being my coding partners
+- To Jon, Amelia, Jessica, Sebastian, Shanley, Alexis, Paul, Harjas, Megan, Nolan, Sadaf, and Marc for being my coding partners
 - To Mom and Dad, and Kat for supporting me through my career change
 ### Thank you for viewing my capstone project!
 ### —Francesco Wai
