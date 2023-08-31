@@ -11,6 +11,7 @@ import pin from '../assets/pin.png'
 import '../styling/Home.css'
 
 import { ReactComponent as WorldMap } from '../assets/worldmap.svg'
+import { aboutUs } from '../assets'
 
 function Home(){
     const { locations } = useContext(LocationsContext)
@@ -84,12 +85,7 @@ function Home(){
         <div id='home' className='container'>
             <div id='about' className='card bg-light m-3 row' style={{}}>
                 <div className='card-header bg-secondary text-light'><b>About</b></div>
-                <div className='card-text' style={{textAlign:'left'}}>
-                    {/* Flatiron Airlines is a premiere airline company founded in 2023, by software engineering bootcamp graduates from Flatiron School in NYC. 
-                    Currently serving twenty-four airports globally, across North America, Europe, and Asia and featuring craft cocktails and fine dining.
-                    With the best hospitality at 35,000 feet, we're proud to connect you to the world! Book your flight with Flat-lines today! */}
-                    Book your flight with Flatiron Airlines from a growing list of airports (currently operating out of 24 major international airports as of 31-Aug-2023!). Select your seat on our new and improved FL404 Airbus with an expanded capacity of 40 passengers per flight! Print your boarding pass as a neatly formatted A6 size .pdf file containing your reservation information and an embedded QR code for a quick and smooth boarding experience. Book your reservation with one-way or round-trip options and no additional charges for seat changes and cancellations. Fly with us at Flatiron Airlines today! https://github.com/bonbongiraffe/unity_airlines
-                </div>
+                <div className='card-text' style={{textAlign:'left'}}>{aboutUs}</div>
             </div>
             <div className='row'>
                 <div id='photos' className='card bg-light col m-2' style={{width:'37rem', height:'18rem'}}>
