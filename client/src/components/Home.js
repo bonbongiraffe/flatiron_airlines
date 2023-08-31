@@ -82,28 +82,28 @@ function Home(){
 
     return( 
         <div id='home' className='container'>
-            <div id='about' className='card bg-light m-3'>
+            <div id='about' className='card bg-light m-3 row' style={{}}>
                 <div className='card-header'><b>About</b></div>
                 <div className='card-text' style={{textAlign:'left'}}>
                     Flatiron Airlines is a premiere airline company founded in 2023, by software engineering bootcamp graduates from Flatiron School in NYC. 
                     Currently serving twenty-four airports globally, across North America, Europe, and Asia and featuring craft cocktails and fine dining.
-                    With the best hostpiality at 35,000 feet, we're proud to connect you to the world! Book your flight with Flat-lines today!
+                    With the best hospitality at 35,000 feet, we're proud to connect you to the world! Book your flight with Flat-lines today!
                 </div>
             </div>
             <div className='row'>
-                <div id='photos' className='card bg-light col' style={{width:'37rem', height:'18rem'}}>
+                <div id='photos' className='card bg-light col m-2' style={{width:'37rem', height:'18rem'}}>
                     <div className='container' style={{position:'relative'}}>
                         <img className='card-img-top mt-3' src={photos[photoIndex].path} alt='photo'/>
-                        <div className='card-text' style={{}}>{dots}</div>
+                        <div className='card-text' style={{backgroundColor:'grey'}}>{dots}</div>
                     </div>
                     <div className='card-body'>
                         <div className='card-header'>{photos[photoIndex].name}</div>
                         <div className='card-text'>{photos[photoIndex].location}</div>
                     </div>
                 </div>
-                <div id='map' className='col container' style={{position:'relative'}}>
+                <div id='map' className='col container m-2' style={{position:'relative', backgroundColor:'rgb(10,163,207,0.7)', height:'23rem',borderRadius:'10px'}}>
                     <WorldMap style={{height:'25rem',width:'38rem',border:''}}/>
-                    <div>
+                    <div className='pin-container'>
                         <img src={pin} className='pin' style={{top:'115px', left:'120px'}}/>
                         <img src={pin} className='pin' style={{top:'100px', left:'135px'}}/>
                         <img src={pin} className='pin' style={{top:'107px', left:'50px'}}/>
@@ -116,7 +116,6 @@ function Home(){
                         <img src={pin} className='pin' style={{top:'145px', left:'480px'}}/>
                         <img src={pin} className='pin' style={{top:'115px', left:'520px'}}/>
                         <img src={pin} className='pin' style={{top:'118px', left:'499px'}}/>
-                        
                     </div>
                 </div>
                 <div id='locations' className='card bg-light col-5 m-1' style={{width:'13rem', maxHeight:'25rem'}}>
