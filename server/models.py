@@ -109,6 +109,18 @@ class Flight(db.Model, SerializerMixin):
     @property
     def open_seats(self):
         empty_plane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        new_empty_plane = [
+        '1A', '1B', '1C', '1D',
+        '2A', '2B', '2C', '2D',
+        '3A', '3B', '3C', '3D',
+        '4A', '4B', '4C', '4D',
+        '5A', '5B', '5C', '5D',
+        '6A', '6B', '6C', '6D',
+        '7A', '7B', '7C', '7D',
+        '8A', '8B', '8C', '8D',
+        '9A', '9B', '9C', '9D',
+        '10A', '10B', '10C', '10D'
+        ]
         seats_list = [s for s in empty_plane if s not in self.taken_seats]
         return seats_list
 

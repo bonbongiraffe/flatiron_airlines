@@ -86,7 +86,7 @@ function EditResForm(){
             </form> : null }
             {/* // editing reservation */}
             { (reservation && !confirmed) ? 
-                <div className='container' style={{color:'white'}}>
+                <div className='container mb-3' style={{color:'white'}}>
                     <p>Passenger: {reservation.user.first_name} {reservation.user.last_name}</p>
                     <p>Origin: {reservation.flight.origin}</p>
                     <p>Destination: {reservation.flight.destination}</p>
@@ -95,7 +95,9 @@ function EditResForm(){
                     <div>
                         <h3>Seating Chart</h3>
                         {assets.seatingChartLegend}
-                        <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
+                        <div className='container' style={{width:'20rem'}}>
+                            <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
+                        </div>
                         {selectedSeat ? <p>Seat {selectedSeat} selected</p> : null}
                         {selectedSeat ? <button className='btn btn-primary' onClick={()=>handleSubmit()}>Revise Reservation</button> : null}
                     </div> : <p>Seat: {reservation.seat}</p>}
