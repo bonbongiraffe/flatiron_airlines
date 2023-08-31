@@ -15,7 +15,7 @@ function CreateResForm({}){
             <p>Your reservation is confirmed, {user.first_name}!</p>
             { type==='one-way' ? <p>Confirmation number: {reservations[0].conf_number}</p> : null }
             { type==='round-trip' ? <p>Confirmation numbers: outgoing - {reservations[0].conf_number}, returning - {reservations[1].conf_number}</p> : null }
-            <p>Thank you for flying with Unity!</p>
+            <p>Thank you for flying with Flatiron!</p>
         </div>
     )
 

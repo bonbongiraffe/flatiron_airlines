@@ -7,8 +7,9 @@ export const openSeatingChart = <>
     </>
 
 export const seatingChartLegend = <ul className="list-unstyled">
-        <li className="list-item" style={{color:'white'}}>W = window</li>
         <li className="list-item" style={{color:'white'}}>A = aisle</li>
+        <li className="list-item" style={{color:'white'}}>E = emergency exit</li>
+        <li className="list-item" style={{color:'white'}}>W = window</li>
     </ul>
 
 export const renderSeatingChart = (openSeatslist=[]) => {
@@ -58,3 +59,26 @@ export const newSeatingChart = (openSeatslist=[]) => {
     // console.log(chart)
     return <div className=''>{renderedRows}</div>
 }
+
+export const newOpenSeatList = [
+    '1A', '1B', '1C', '1D',
+    '2A', '2B', '2C', '2D',
+    '3A', '3B', '3C', '3D',
+    '4A', '4B', '4C', '4D',
+    '5A', '5B', '5C', '5D',
+    '6A', '6B', '6C', '6D',
+    '7A', '7B', '7C', '7D',
+    '8A', '8B', '8C', '8D',
+    '9A', '9B', '9C', '9D',
+    '10A', '10B', '10C', '10D'
+]
+
+export const exitAisle = <div className='row m-1' key='exit-aisle' style={{color:'white'}}>
+    <div className='col'>{'<—'}</div>
+    <div className='col'>{'E'}</div>
+    <div className='col'>{''}</div>
+    <div className='col'>{''}</div>
+    <div className='col'>{''}</div>
+    <div className='col'>{'E'}</div>
+    <div className='col'>{'—>'}</div>
+</div>
