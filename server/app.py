@@ -115,6 +115,13 @@ class ReservationsById(Resource):
             return reservation
         db.session.delete(reservation)
         db.session.commit()
+        try: 
+            qr_path = f'./static/qr_codes/{reservation.conf_number}.png'
+            pdf_path = f'./static/boarding_passes/{reservation.conf_number}.pdf'
+            os.unlink(qr_path)
+            os.unlink(pdf_path)
+        except Exception as e:
+            return make_response({'error':e},400)
         return make_response({'message':'Reservation deleted'},204)
     
     def patch(self,id):
