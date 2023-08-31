@@ -95,7 +95,7 @@ function EditResForm(){
                     <div>
                         <h3>Seating Chart</h3>
                         {assets.seatingChartLegend}
-                        <div className='container' style={{width:'20rem'}}>
+                        <div className='container' style={{width:'25rem'}}>
                             <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
                         </div>
                         {selectedSeat ? <p>Seat {selectedSeat} selected</p> : null}
@@ -108,7 +108,7 @@ function EditResForm(){
             { (reservation && confirmed) ? 
             <div className='container' style={{color:'white'}}>
                 <p>Your reservation has been revised.</p>
-                <p>Thank you for flying with Unity!</p>
+                <p>Thank you for flying with Flatiron!</p>
             </div> : null }
             {/* // after successful cancellation */}
             { (!reservation && confirmed) ? 

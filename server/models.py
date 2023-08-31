@@ -5,6 +5,19 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db, bcrypt
 
+new_empty_plane = [
+        '1A', '1B', '1C', '1D',
+        '2A', '2B', '2C', '2D',
+        '3A', '3B', '3C', '3D',
+        '4A', '4B', '4C', '4D',
+        '5A', '5B', '5C', '5D',
+        '6A', '6B', '6C', '6D',
+        '7A', '7B', '7C', '7D',
+        '8A', '8B', '8C', '8D',
+        '9A', '9B', '9C', '9D',
+        '10A', '10B', '10C', '10D'
+        ]
+
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
@@ -65,7 +78,7 @@ class Reservation(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     flight_id = db.Column(db.Integer, db.ForeignKey('flights.id'))
-    seat = db.Column(db.Integer) # STRETCH-1
+    seat = db.Column(db.String) # STRETCH-1
     conf_number = db.Column(db.String, unique=True) # STRETCH-2
 
     # relationship
@@ -78,8 +91,8 @@ class Reservation(db.Model, SerializerMixin):
     # validations
     @validates('seat')
     def validate_seat(self,id,new_seat):
-        if not 1 <= new_seat <= 20:
-            raise ValueError("Seat number must be between 1 and 20")
+        if new_seat not in new_empty_plane:
+            raise ValueError("Invalid seat number")
         return new_seat
 
     #repr
@@ -108,20 +121,8 @@ class Flight(db.Model, SerializerMixin):
 
     @property
     def open_seats(self):
-        empty_plane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-        new_empty_plane = [
-        '1A', '1B', '1C', '1D',
-        '2A', '2B', '2C', '2D',
-        '3A', '3B', '3C', '3D',
-        '4A', '4B', '4C', '4D',
-        '5A', '5B', '5C', '5D',
-        '6A', '6B', '6C', '6D',
-        '7A', '7B', '7C', '7D',
-        '8A', '8B', '8C', '8D',
-        '9A', '9B', '9C', '9D',
-        '10A', '10B', '10C', '10D'
-        ]
-        seats_list = [s for s in empty_plane if s not in self.taken_seats]
+        # empty_plane = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        seats_list = [s for s in new_empty_plane if s not in self.taken_seats]
         return seats_list
 
     #repr
