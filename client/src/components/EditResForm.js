@@ -97,8 +97,8 @@ function EditResForm(){
                             <h3>Seating Chart</h3>
                             {assets.seatingChartLegend}
                         </div> : <p>Seat: {reservation.seat}</p> }
-                        { editSeat ? null : <button className='btn btn-success' onClick={() => setEditSeat(true)}>Change Seat</button>}
-                        <button className='btn btn-danger' onClick={() => handleCancel()}>Cancel Reservation</button>
+                        { editSeat ? null : <button className='btn btn-success m-1' onClick={() => setEditSeat(true)}>Change Seat</button>}
+                        <button className='btn btn-danger m-1' onClick={() => handleCancel()}>Cancel Reservation</button>
                     </div>                  
                     { editSeat ? 
                     <div className='col'>

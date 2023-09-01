@@ -45,7 +45,7 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
     if (!airportToCityMap) return <div className="card" style={{width: '25rem'}}>Loading...</div>
     
     return(
-        <div className="card border-dark m-1" style={{width:'20rem', backgroundColor:'rgb(255,255,255,0.8'}}>
+        <div className="card bg-light border-dark m-1" style={{width:'20rem'}}>
             <div className='card-header'><b>Flight:</b> {flight.origin} <span style={{fontFamily: 'Arial, sans-serif'}}>{airplaneEmoji}</span> {flight.destination}</div>
             <div className='card-subtitle text-muted'>{airportToCityMap[flight.origin]} to {airportToCityMap[flight.destination]}</div>
             <div className='card-body'>
