@@ -2,7 +2,7 @@ import ReservationCard from "./ReservationCard"
 import { useEffect, useState, useContext } from "react"
 import { UserContext } from '../context/user'
 
-function MyFlights({  }) {
+function MyFlights() {
     const { user, setUser } = useContext(UserContext)
     const [ reservations, setReservations ] = useState([])
 
@@ -15,7 +15,7 @@ function MyFlights({  }) {
                 setUser(user) 
                 setReservations(user.reservations)
                 }) } }) 
-    },[])
+    },[setUser])
 
     const renderedReservations = reservations.map( reservation => 
         <ReservationCard

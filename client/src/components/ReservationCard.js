@@ -11,7 +11,7 @@ function ReservationCard({ flightId, reservationId, seat, confNum }) {
         fetch(`flights/${flightId}`)
             .then( r => r.json())
             .then( f => setFlight(f))
-    },[])
+    },[flightId])
     
     const downloadBoardingPass = () => {
         // const pdfUrl = `/export-boarding-pass/${confNum}` <-- for deployment

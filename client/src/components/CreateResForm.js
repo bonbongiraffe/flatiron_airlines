@@ -3,7 +3,7 @@ import FlightSearch from './FlightSearch'
 import SeatSelection from './SeatSelection'
 import { UserContext } from '../context/user'
 
-function CreateResForm({}){
+function CreateResForm(){
     const [ flight, setFlight ] = useState(null)
     const [ reservations, setReservations ] = useState([])
     const [ type, setType ] = useState('round-trip')

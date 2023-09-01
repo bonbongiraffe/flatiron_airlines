@@ -16,7 +16,7 @@ function LocationsProvider({children}){
           // console.log(airports)
           const airportToCity = {}
           const cityToAirport = {}
-          airports.map(airport => {
+          airports.forEach(airport => {
             airportToCity[airport.id_code] = airport.city
             cityToAirport[airport.city] = airport.id_code
           })

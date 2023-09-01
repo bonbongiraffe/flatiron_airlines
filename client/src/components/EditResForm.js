@@ -86,23 +86,30 @@ function EditResForm(){
             </form> : null }
             {/* // editing reservation */}
             { (reservation && !confirmed) ? 
-                <div className='container mb-3' style={{color:'white'}}>
-                    <p>Passenger: {reservation.user.first_name} {reservation.user.last_name}</p>
-                    <p>Origin: {reservation.flight.origin}</p>
-                    <p>Destination: {reservation.flight.destination}</p>
-                    <p>Confirmation: {reservation.conf_number}</p>
+                <div className='container mb-3 row' style={{color:'white'}}>
+                    <div className={ editSeat ? 'col' : '' }>
+                        <h3>Reservation Information</h3>
+                        <p>Passenger: {reservation.user.first_name} {reservation.user.last_name}</p>
+                        <p>Origin: {reservation.flight.origin}</p>
+                        <p>Destination: {reservation.flight.destination}</p>
+                        <p>Confirmation: {reservation.conf_number}</p>
+                        { editSeat ? <div>
+                            <h3>Seating Chart</h3>
+                            {assets.seatingChartLegend}
+                        </div> : <p>Seat: {reservation.seat}</p> }
+                        { editSeat ? null : <button className='btn btn-success m-1' onClick={() => setEditSeat(true)}>Change Seat</button>}
+                        <button className='btn btn-danger m-1' onClick={() => handleCancel()}>Cancel Reservation</button>
+                    </div>                  
                     { editSeat ? 
-                    <div>
-                        <h3>Seating Chart</h3>
-                        {assets.seatingChartLegend}
+                    <div className='col'>
                         <div className='container' style={{width:'25rem'}}>
                             <SeatChart openSeatslist={flight.open_seats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
                         </div>
+                    </div> : null }
+                    <div className='col'>
                         {selectedSeat ? <p>Seat {selectedSeat} selected</p> : null}
                         {selectedSeat ? <button className='btn btn-primary' onClick={()=>handleSubmit()}>Revise Reservation</button> : null}
-                    </div> : <p>Seat: {reservation.seat}</p>}
-                    { editSeat ? null : <button className='btn btn-success' onClick={() => setEditSeat(true)}>Change Seat</button>}
-                    <button className='btn btn-danger' onClick={() => handleCancel()}>Cancel Reservation</button>
+                    </div>
                 </div> : null }
             {/* // after successful edit */}
             { (reservation && confirmed) ? 

@@ -1,25 +1,26 @@
 id_code,city
 EWR,Newark
 JFK,New York City
+LGA,LaGuardia
 BOS,Boston
 DEN,Denver
-HKG,Hong Kong
-HND,Tokyo
 DFW,Dallas
-MUC,Munich
-LAX,Los Angeles
-ICN,Seoul
-YVR,Vancouver
-ORD,Chicago
-LGA,LaGuardia
 MCI,Kansas City
-LHR,London
+ORD,Chicago
+ATL,Atlanta
+MIA,Miami
+LAX,Los Angeles
+SFO,San Francisco
+DTW,Detroit
 SWF,Newburgh
+YVR,Vancouver
+YYZ,Toronto
 AMS,Amsterdam
 BRU,Brussels
 BCN,Barcelona
 DUB,Dublin
-DTW,Detroit
-ATL,Atlanta
-MIA,Miami
-SFO,San Francisco
+MUC,Munich
+LHR,London
+ICN,Seoul
+HND,Tokyo
+HKG,Hong Kong

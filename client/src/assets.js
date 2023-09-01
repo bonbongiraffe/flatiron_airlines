@@ -82,3 +82,11 @@ export const exitAisle = <div className='row m-1' key='exit-aisle' style={{color
     <div className='col'>{'E'}</div>
     <div className='col'>{'—>'}</div>
 </div>
+
+export const aboutUs = `
+    Book your flight with Flatiron Airlines from a growing list of airports (currently operating out of 24 major international airports as of 31-Aug-2023!). 
+    Select your seat on our new and improved FL404 Airbus with an expanded capacity of 40 passengers per flight! 
+    Print your boarding pass as a neatly formatted A6 size .pdf file containing your reservation information and an embedded QR code for a quick and smooth boarding experience.
+    Book your reservation with one-way or round-trip options and no additional charges for seat changes and cancellations. 
+    Fly with us at Flatiron Airlines today!
+`
