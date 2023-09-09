@@ -134,6 +134,8 @@ class Airport(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     id_code = db.Column(db.String)
 
     #repr

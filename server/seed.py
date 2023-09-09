@@ -29,7 +29,9 @@ def get_airports():
             for i in range(1,len(rows)):
                 airport = Airport(
                     id_code = rows[i][0],
-                    city = rows[i][1]
+                    city = rows[i][1],
+                    latitude = rows[i][2],
+                    longitude = rows[i][3]
                 )
                 airportsList.append(rows[i][0])
                 airports.append(airport)

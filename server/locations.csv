@@ -1,26 +1,4 @@
-id_code,city
-EWR,Newark
-JFK,New York City
-LGA,LaGuardia
-BOS,Boston
-DEN,Denver
-DFW,Dallas
-MCI,Kansas City
-ORD,Chicago
-ATL,Atlanta
-MIA,Miami
-LAX,Los Angeles
-SFO,San Francisco
-DTW,Detroit
-SWF,Newburgh
-YVR,Vancouver
-YYZ,Toronto
-AMS,Amsterdam
-BRU,Brussels
-BCN,Barcelona
-DUB,Dublin
-MUC,Munich
-LHR,London
-ICN,Seoul
-HND,Tokyo
-HKG,Hong Kong
+id_code,city,latitude,longitude
+EWR,Newark,40.6903511,-74.1773604
+BOS,Boston,42.3634174,-71.0256994
+SWF,Newburgh,41.5013545,-74.1002162
