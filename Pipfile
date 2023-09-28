@@ -14,6 +14,7 @@ flask-bcrypt = "*"
 flask-cors = "*"
 qrcode = "*"
 reportlab = "*"
+geopy = "*"
 
 [dev-packages]
 

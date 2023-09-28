@@ -1,4 +1,5 @@
 from models import db, User, Reservation, Flight, Airport
+from geopy.distance import distance
 from app import app
 import csv
 import os
@@ -25,7 +26,7 @@ def get_airports():
             rows = [row for row in csv.reader(csvfile, delimiter=',', quotechar='"')] # <-- csv to rows
             #rows to db
             airports = []
-            airportsList = []
+            # airportsList = []
             for i in range(1,len(rows)):
                 airport = Airport(
                     id_code = rows[i][0],
@@ -35,11 +36,13 @@ def get_airports():
                     utc_offset = rows[i][4],
                     level = rows[i][5]
                 )
-                airportsList.append(rows[i][0])
+                # airportsList.append(rows[i][0])
                 airports.append(airport)
             db.session.add_all(airports)
             db.session.commit()
-    return airportsList
+            print(airports)
+    return airports
+    # return airportsList
 
 def clear_flights():
     with app.app_context():
@@ -63,9 +66,13 @@ def create_flights():
         for x in range(0,len(airports)):
             for y in range(0,len(airports)):
                 if x != y:
+                    airport1 = airports[x]
+                    airport2 = airports[y]
                     new_flight = Flight(
-                        origin = airports[x],
-                        destination = airports[y]
+                        origin = airport1.id_code,
+                        destination = airport2.id_code,
+                        distance = distance((airport1.latitude,airport1.longitude),(airport2.latitude,airport2.longitude)).km,
+                        timezone_change = airport2.utc_offset - airport1.utc_offset ,
                     )
                     db.session.add(new_flight)
                     db.session.commit()
