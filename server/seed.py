@@ -31,7 +31,9 @@ def get_airports():
                     id_code = rows[i][0],
                     city = rows[i][1],
                     latitude = rows[i][2],
-                    longitude = rows[i][3]
+                    longitude = rows[i][3],
+                    utc_offset = rows[i][4],
+                    level = rows[i][5]
                 )
                 airportsList.append(rows[i][0])
                 airports.append(airport)

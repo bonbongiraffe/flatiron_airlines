@@ -105,6 +105,10 @@ class Flight(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     origin = db.Column(db.String)
     destination = db.Column(db.String)
+    distance = db.Column(db.Float)
+    timezone_change = db.Column(db.Integer)
+    departure = db.Column(db.DateTime)
+    arrival = db.Column(db.DateTime)
 
     # relationship
     reservations = db.relationship('Reservation', back_populates='flight')
@@ -137,6 +141,8 @@ class Airport(db.Model, SerializerMixin):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     id_code = db.Column(db.String)
+    utc_offset = db.Column(db.Integer)
+    level = db.Column(db.Integer)
 
     #repr
     def __repr__(self):
