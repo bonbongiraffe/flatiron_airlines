@@ -142,6 +142,7 @@ class Airport(db.Model, SerializerMixin):
     longitude = db.Column(db.Float)
     id_code = db.Column(db.String)
     utc_offset = db.Column(db.Integer)
+    # timezone db.Column(db.String)
     level = db.Column(db.Integer)
 
     #repr

@@ -72,7 +72,8 @@ def create_flights():
                         origin = airport1.id_code,
                         destination = airport2.id_code,
                         distance = distance((airport1.latitude,airport1.longitude),(airport2.latitude,airport2.longitude)).km,
-                        timezone_change = airport2.utc_offset - airport1.utc_offset ,
+                        timezone_change = airport2.utc_offset - airport1.utc_offset,
+                        
                     )
                     db.session.add(new_flight)
                     db.session.commit()
