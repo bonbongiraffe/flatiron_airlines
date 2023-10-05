@@ -3,7 +3,7 @@
 ### About: 
 Book your flight with Flatiron Airlines from a growing list of airports (currently operating out of 24 major international airports as of 31-Aug-2023!). Select your seat on our new and improved FL404 Airbus with an expanded capacity of 40 passengers per flight! Print your boarding pass as a neatly formatted A6 size .pdf file containing your reservation information and an embedded QR code for a quick and smooth boarding experience. Book your reservation with one-way or round-trip options and no additional charges for seat changes and cancellations. Fly with us at Flatiron Airlines today!
 
-Clone the `flatiron_airlines` repository onto your local machine and simply run the `launch.sh` file to get started! *Detailed steps outlined at the end*
+Clone the `flatiron_airlines` repository onto your local machine and simply run `bash launch.sh` from the project directory to get started! *Detailed steps outlined at the end*
 
 1. ### User Experience:
     - create account and login
@@ -22,7 +22,7 @@ Clone the `flatiron_airlines` repository onto your local machine and simply run 
             - constraints: conf_number must be unique
     - Airport: id, city, id_code (*no relationships yet*)
 3. ### Back-end (Flask):
-    - REST-ful routes for CRUD:
+    - RESTful routes with CRUD:
         - `/reservations`
             - create
         - `/reservations/<id>`
@@ -39,7 +39,7 @@ Clone the `flatiron_airlines` repository onto your local machine and simply run 
     - boarding pass export route:
         - `/export-boarding-pass/<confirmation>`
             - GET to fetch boarding_pass.pdf as attachment
-    - user/auth (non-restful): `/login`, `/signup`, `/authorized`, and `/logout`
+    - user authentication (non-restful): `/login`, `/signup`, `/authorized`, and `/logout`
 4. ### Front-end (React):
     - `/home`
         - about info, photo cards, world map, locations list
@@ -57,6 +57,7 @@ Clone the `flatiron_airlines` repository onto your local machine and simply run 
     - reportlab (`python`) for creating and formatting .pdf 
     - qrcode (`python`) for generating qr codes
     - bootstrap (`js`) for styling
+    - bcrypt (`python`) for password hashing
 6. ### Next Steps:
     - basic pricing
         - calculated based on origin/destination and seat selection
