@@ -230,7 +230,8 @@ def authorized():
 
 @app.route('/logout',methods=['DELETE'])
 def logout():
-    del session['user_id']
+    if 'user_id' in session:
+        del session['user_id']
     return make_response({'message':'Logout successful'},204)
 
 @app.route('/static/<path:path>')

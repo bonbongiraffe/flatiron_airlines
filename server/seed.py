@@ -1,8 +1,50 @@
 from models import db, User, Reservation, Flight, Airport
+from datetime import date, datetime, time
+from calendar import monthrange
 from geopy.distance import distance
 from app import app
 import csv
 import os
+
+airport_level_dict = {}
+level_dict = {
+    1:[time(8,0),time(14,0),time(20,0)],
+    2:[time(10,0),time(16,0)],
+    3:[time(9,0)]
+    }
+
+def flight_time(distance):
+    # assumptions:
+    # 1) take-off / landing time is ~1 hour
+    # 2) 804 kmh (or 500 mph)
+    # 3) input distance is a straight-line distance calculated with great-circle formula
+    total_time = distance/804 + 1
+    hours = int(total_time // 1)
+    minutes = int(60 * (total_time % 1))
+    return time(hours,minutes)
+
+def create_calendar():
+    calendar = []
+    month = datetime.now().month + 1
+    year = datetime.now().year
+    first_day, days = monthrange(year,month) #first_day: range 0-6, Monday-Sunday / days: number of days in month
+    for day in range(1,days+1):
+        d = date(year,month,day)
+        calendar.append(d)
+    return calendar
+
+def schedule_flights(route):
+    print("Scheduling flights...")
+
+    for day in calendar:
+        for flight in routes:
+            schedule = level_dict[airport_level_dict(flight.origin.id_code)]
+            for scheduled_time in schedule:
+                print(f'outgoing flight from {flight.origin.city}')
+            # d_time = daytime.combine(day,)
+            # flight.departure = 
+            # flight.arrival = 0
+    # output = {flight_time: None, departure: None, arrival: None}
 
 def clear_files(directory_path):
     for filename in os.listdir(directory_path):
@@ -36,11 +78,12 @@ def get_airports():
                     utc_offset = rows[i][4],
                     level = rows[i][5]
                 )
+                airport_level_dict[rows[i][0]] = int(rows[i][5])
                 # airportsList.append(rows[i][0])
                 airports.append(airport)
             db.session.add_all(airports)
             db.session.commit()
-            print(airports)
+            # print(airports)
     return airports
     # return airportsList
 
@@ -60,28 +103,39 @@ def clear_reservations():
     print('Deleting boarding pass pdf files...')
     clear_files('./static/boarding_passes')
 
-def create_flights():
-    print('Creating flights...')
+def create_routes():
+    print('Creating routes...')
+    routes = []
     with app.app_context():
         for x in range(0,len(airports)):
             for y in range(0,len(airports)):
                 if x != y:
                     airport1 = airports[x]
                     airport2 = airports[y]
-                    new_flight = Flight(
+                    flight_distance = distance((airport1.latitude,airport1.longitude),(airport2.latitude,airport2.longitude)).km
+                    route  = Flight(
                         origin = airport1.id_code,
                         destination = airport2.id_code,
-                        distance = distance((airport1.latitude,airport1.longitude),(airport2.latitude,airport2.longitude)).km,
+                        distance = flight_distance,
                         timezone_change = airport2.utc_offset - airport1.utc_offset,
-                        
+                        flight_time = flight_time(flight_distance),
+                        departure = None,
+                        arrival = None
                     )
-                    db.session.add(new_flight)
-                    db.session.commit()
+                    routes.append(route)
+                    # db.session.add(route )
+                    # db.session.commit()
+        return routes
 
 if __name__ == '__main__':
+    # print(flight_time(300))
+    calendar = create_calendar()
+    # print(calendar)
     clear_airports()
     airports = get_airports()
+    # print(airport_level_dict)
     clear_flights()
-    create_flights()
-    clear_reservations()
-    print('Bon voyage!')
+    routes = create_routes()
+    schedule_flights()
+    # clear_reservations()
+    # print('Bon voyage!')
