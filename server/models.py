@@ -132,7 +132,7 @@ class Flight(db.Model, SerializerMixin):
 
     #repr
     def __repr__(self):
-        return f'<id:{self.id}, origin:{self.origin}, destination:{self.destination}, flight_time:{self.flight_time}>'
+        return f'<id:{self.id}, origin:{self.origin}, destination:{self.destination}, distance:{self.distance}, flight_time:{self.flight_time}>'
 
 class Airport(db.Model, SerializerMixin):
     __tablename__ = "airports"

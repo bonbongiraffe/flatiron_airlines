@@ -33,14 +33,13 @@ def create_calendar():
         calendar.append(d)
     return calendar
 
-def schedule_flights(route):
+def schedule_flights(route): #assumes function called within app.app_context
     print("Scheduling flights...")
-
     for day in calendar:
         for flight in routes:
             schedule = level_dict[airport_level_dict(flight.origin.id_code)]
             for scheduled_time in schedule:
-                print(f'outgoing flight from {flight.origin.city}')
+                print(f'outgoing flight from {flight.origin.city} at {scheduled_time}')
             # d_time = daytime.combine(day,)
             # flight.departure = 
             # flight.arrival = 0
@@ -83,7 +82,7 @@ def get_airports():
                 airports.append(airport)
             db.session.add_all(airports)
             db.session.commit()
-            # print(airports)
+            print(airports)
     return airports
     # return airportsList
 
@@ -103,16 +102,19 @@ def clear_reservations():
     print('Deleting boarding pass pdf files...')
     clear_files('./static/boarding_passes')
 
-def create_routes():
+def create_routes(): #assumes function called within app.app_context
     print('Creating routes...')
     routes = []
     with app.app_context():
+        # print(airports)
         for x in range(0,len(airports)):
             for y in range(0,len(airports)):
                 if x != y:
                     airport1 = airports[x]
                     airport2 = airports[y]
-                    flight_distance = distance((airport1.latitude,airport1.longitude),(airport2.latitude,airport2.longitude)).km
+                    # print(airport1,airport2)
+                    # print(airport1.latitude,airport1.longitude,airport2.latitude,airport2.longitude)
+                    flight_distance = round(distance((airport1.latitude,airport1.longitude),(airport2.latitude,airport2.longitude)).km,2)
                     route  = Flight(
                         origin = airport1.id_code,
                         destination = airport2.id_code,
@@ -125,7 +127,7 @@ def create_routes():
                     routes.append(route)
                     # db.session.add(route )
                     # db.session.commit()
-        return routes
+    return routes
 
 if __name__ == '__main__':
     # print(flight_time(300))
@@ -133,9 +135,12 @@ if __name__ == '__main__':
     # print(calendar)
     clear_airports()
     airports = get_airports()
+    # print(airports)
     # print(airport_level_dict)
     clear_flights()
+    # with app.app_context():
     routes = create_routes()
-    schedule_flights()
+    print(routes)
+    # schedule_flights()
     # clear_reservations()
     # print('Bon voyage!')
