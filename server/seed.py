@@ -67,7 +67,6 @@ def get_airports():
             rows = [row for row in csv.reader(csvfile, delimiter=',', quotechar='"')] # <-- csv to rows
             #rows to db
             airports = []
-            # airportsList = []
             for i in range(1,len(rows)):
                 airport = Airport(
                     id_code = rows[i][0],
@@ -78,13 +77,11 @@ def get_airports():
                     level = rows[i][5]
                 )
                 airport_level_dict[rows[i][0]] = int(rows[i][5])
-                # airportsList.append(rows[i][0])
                 airports.append(airport)
             db.session.add_all(airports)
             db.session.commit()
-            print(airports)
+            # print(airports)
     return airports
-    # return airportsList
 
 def clear_flights():
     with app.app_context():
