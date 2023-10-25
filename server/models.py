@@ -106,8 +106,8 @@ class Flight(db.Model, SerializerMixin):
     origin = db.Column(db.String)
     destination = db.Column(db.String)
     distance = db.Column(db.Float)
-    timezone_change = db.Column(db.Integer)
-    flight_time = db.Column(db.Time)
+    timezone_change = db.Column(db.Integer) #should be Interval, but sqlite3 does not support timedelta objects
+    flight_time = db.Column(db.Time) #should be Interval, but sqlite3 does not support timedelta objects
     departure = db.Column(db.DateTime)
     arrival = db.Column(db.DateTime)
 
@@ -132,7 +132,7 @@ class Flight(db.Model, SerializerMixin):
 
     #repr
     def __repr__(self):
-        return f'<id:{self.id}, origin:{self.origin}, destination:{self.destination}, distance:{self.distance}, flight_time:{self.flight_time}>'
+        return f'<id:{self.id}, origin:{self.origin}, destination:{self.destination}, distance:{self.distance}, timezone_change:{self.timezone_change} flight_time:{self.flight_time}, departure:{self.departure}, arrival:{self.arrival}>'
 
 class Airport(db.Model, SerializerMixin):
     __tablename__ = "airports"
